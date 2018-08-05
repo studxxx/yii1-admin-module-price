@@ -1,0 +1,13 @@
+{
+    "name": "studxxx/yii1-admin-module-prices",
+    "description": "Module for import prices",
+    "type": "yii1-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "studxxx",
+            "email": "stud181177@gmail.com"
+        }
+    ],
+    "require": {}
+}
