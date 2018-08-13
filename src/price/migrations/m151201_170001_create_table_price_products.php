@@ -1,10 +1,12 @@
 <?php
 
-class m151201_170000_create_table_price extends CDbMigration
+class m151201_170001_create_table_price_products extends CDbMigration
 {
-    const TABLE_SCHEMA = 'prices';
+    const TABLE_SCHEMA = 'price_products';
     const TABLE_OPTIONS = 'engine=innodb character set=UTF8 collate utf8_unicode_ci;';
-
+/*
+ *
+ */
     public function safeUp()
     {
         $this->createTable(self::TABLE_SCHEMA, [
