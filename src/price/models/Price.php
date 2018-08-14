@@ -66,27 +66,6 @@ class Price extends CActiveRecord
     }
 
     /**
-     * @return CActiveDataProvider
-     */
-    public function search()
-    {
-        $criteria = new CDbCriteria;
-
-        $criteria->compare('id', $this->id);
-        $criteria->compare('price_file', $this->price_file, true);
-        $criteria->compare('supplier_id', $this->supplier_id);
-        $criteria->compare('status', $this->status);
-        $criteria->compare('created_at', $this->created_at);
-        $criteria->compare('updated_at', $this->updated_at);
-        $criteria->order = 'status ASC';
-
-        return new CActiveDataProvider($this, [
-            'criteria' => $criteria,
-            'pagination' => ['pageSize' => 20],
-        ]);
-    }
-
-    /**
      * @param string $className
      * @return Price|CActiveRecord
      */
