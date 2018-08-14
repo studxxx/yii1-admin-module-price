@@ -10,7 +10,7 @@ class m151201_170005_create_table_price_ranges extends CDbMigration
         $this->createTable(self::TABLE_SCHEMA, [
             'id' => 'pk',
             'supplier_id' => 'int(11) not null',
-            'from' => 'int(11) default null',
+            'from' => 'int(11) default 0',
             'to' => 'int(11) default null',
             'created_at' => 'int(11) not null',
             'updated_at' => 'int(11) not null',
