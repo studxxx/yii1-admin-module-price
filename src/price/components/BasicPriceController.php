@@ -1,6 +1,6 @@
 <?php
 
-class PriceController extends CController
+class BasicPriceController extends CController
 {
     /** @var string */
     public $layout = '//layouts/console-column2';
