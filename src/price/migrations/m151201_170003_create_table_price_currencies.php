@@ -2,7 +2,7 @@
 
 class m151201_170003_create_table_price_currencies extends CDbMigration
 {
-    const TABLE_SCHEMA = 'price_templates';
+    const TABLE_SCHEMA = 'price_currencies';
     const TABLE_OPTIONS = 'engine=innodb character set=UTF8 collate utf8_unicode_ci;';
 
     public function safeUp()
