@@ -1,18 +1,17 @@
 <?php
 
-class ImportHelper
+class PriceHelper
 {
     public static function statuses()
     {
         return [
-            Import::STATUS_UPLOADED => ConsoleModule::t('T_UPLOADED'),
-            Import::STATUS_IMPORTED => ConsoleModule::t('T_IMPORTED'),
-            Import::STATUS_ERROR => ConsoleModule::t('T_ERROR_IMPORT'),
+            Price::STATUS_UPLOADED => PriceModule::t('T_UPLOADED'),
+            Price::STATUS_IMPORTED => PriceModule::t('T_IMPORTED'),
+            Price::STATUS_ERROR => PriceModule::t('T_ERROR_IMPORT'),
         ];
     }
 
-
-    public static function getStatus(Import $model)
+    public static function getStatus(Price $model)
     {
         $statuses = self::statuses();
         $class = 'danger';
