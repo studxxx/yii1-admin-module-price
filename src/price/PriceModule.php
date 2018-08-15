@@ -126,7 +126,42 @@ class PriceModule extends WebModule
                 'value' => 'prices',
                 'type' => 'string',
                 'default' => 'prices',
-            ]
+            ],
+            [
+                'param' => 'PRICE.PATH_UPLOAD',
+                'label' => 'Path to upload price',
+                'value' => 'uploads/prices',
+                'type' => 'string',
+                'default' => 'uploads',
+            ],
+            [
+                'param' => 'PRICE.PATH_UPLOAD_IMPORT',
+                'label' => 'Path for imported price',
+                'value' => 'uploads/imported',
+                'type' => 'string',
+                'default' => 'import',
+            ],
+            [
+                'param' => 'PRICE.CHUNK_SIZE',
+                'label' => 'Chunk size document',
+                'value' => 2000,
+                'type' => 'integer',
+                'default' => 2000,
+            ],
+            [
+                'param' => 'PRICE.DISPLAY_LOG',
+                'label' => 'Display log in console App',
+                'value' => 0,
+                'type' => 'integer',
+                'default' => 1,
+            ],
+            [
+                'param' => 'PRICE.DELIVERY',
+                'label' => 'Delivery',
+                'value' => 21,
+                'type' => 'integer',
+                'default' => 21,
+            ],
         ]);
 
 
