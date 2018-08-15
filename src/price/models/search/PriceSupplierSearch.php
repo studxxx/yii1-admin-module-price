@@ -34,9 +34,9 @@ class PriceSupplierSearch extends CModel
         return array(
             'id' => PriceModule::t('MODEL_ID'),
             'currency_id' => PriceModule::t('MODEL_CURRENCY'),
-            'name' => PriceModule::t('MODEL_CSV_FILE'),
-            'email' => PriceModule::t('MODEL_SUPPLIER'),
-            'phone' => PriceModule::t('MODEL_STATUS_PRICE'),
+            'name' => PriceModule::t('MODEL_NAME'),
+            'email' => PriceModule::t('MODEL_EMAIL'),
+            'phone' => PriceModule::t('MODEL_PHONE'),
             'created_at' => PriceModule::t('MODEL_CREATED_AT'),
             'updated_at' => PriceModule::t('MODEL_UPDATED_AT'),
         );

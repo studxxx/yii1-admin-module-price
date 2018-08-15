@@ -3,8 +3,6 @@
 /**
  * @property integer $id
  * @property integer $currency_id
- * @property integer $range_id
- * @property integer $template_id
  * @property string $name
  * @property string $title
  * @property string $email
@@ -24,7 +22,7 @@ class PriceSupplier extends CActiveRecord
     public function rules()
     {
         return [
-            ['currency_id, template_id, range_id, created_at, updated_at', 'numerical', 'integerOnly' => true],
+            ['currency_id, created_at, updated_at', 'numerical', 'integerOnly' => true],
             ['name, email, title', 'length', 'max' => 255],
             ['email', 'email'],
             ['phone', 'length', 'max' => 18],
@@ -56,16 +54,14 @@ class PriceSupplier extends CActiveRecord
     {
         return [
             'id' => PriceModule::t('ID'),
-            'currency_id' => PriceModule::t('Currency'),
-            'name' => PriceModule::t('MODEL_SUPPLIERS_NAME'),
-            'email' => PriceModule::t('Email'),
-            'phone' => PriceModule::t('Phone'),
-            'description' => PriceModule::t('Description'),
-            'template' => PriceModule::t('template'),
-            'margin' => PriceModule::t('Margin'),
-            'note' => PriceModule::t('Note'),
-            'created_at' => PriceModule::t('Created'),
-            'updated_at' => PriceModule::t('Updated'),
+            'currency_id' => PriceModule::t('MODEL_CURRENCY'),
+            'name' => PriceModule::t('MODEL_NAME'),
+            'email' => PriceModule::t('MODEL_EMAIL'),
+            'phone' => PriceModule::t('MODEL_PHONE'),
+            'note' => PriceModule::t('MODEL_NOTE'),
+            'description' => PriceModule::t('MODEL_DESCRIPTION'),
+            'created_at' => PriceModule::t('MODEL_CREATED_AT'),
+            'updated_at' => PriceModule::t('MODEL_UPDATED_AT'),
         ];
     }
 

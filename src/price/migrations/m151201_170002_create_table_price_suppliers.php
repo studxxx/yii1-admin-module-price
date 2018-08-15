@@ -11,10 +11,11 @@ class m151201_170002_create_table_price_suppliers extends CDbMigration
             'id' => 'pk',
             'currency_id' => 'int(11) not null',
             'name' => 'string default null',
-            'description' => 'string default null',
             'email' => 'string default null',
             'phone' => 'string default null',
             'title' => 'string default null',
+            'note' => 'text default null',
+            'description' => 'text default null',
             'created_at' => 'int(11) not null',
             'updated_at' => 'int(11) not null',
         ], self::TABLE_OPTIONS);
