@@ -55,17 +55,23 @@ class PriceModule extends WebModule
                 'visible' => Yii::app()->user->checkAccess(Users::ROLE_MANAGER),
                 'items' => [
                     [
-                        'label' => static::t('MENU_LIST'),
-                        'url' => ['/price/import/index'],
+                        'label' => static::t('T_PRICES'),
+                        'url' => ['/price/price/index'],
                         'visible' => Yii::app()->user->checkAccess(Users::ROLE_MANAGER),
                         'active' => Yii::app()->controller->id === 'price'
                             && Yii::app()->controller->action->id !== 'create'
                     ],
                     [
-                        'label' => static::t('MENU_ADD'),
-                        'url' => ['/price/import/create'],
+                        'label' => static::t('T_ADD_PRICE'),
+                        'url' => ['/price/price/create'],
                         'visible' => Yii::app()->user->checkAccess(Users::ROLE_MANAGER),
-                    ]
+                    ],
+                    [
+                        'label' => '<i class="icon-th-list"></i>&nbsp;' . static::t('T_SUPPLIERS'),
+                        'url' => ['/price/priceSupplier/index'],
+                        'visible' => Yii::app()->user->checkAccess(Users::ROLE_MANAGER),
+                        'active' => Yii::app()->controller->id === 'priceSupplier'
+                    ],
                 ],
                 'itemOptions' => ['class' => 'has-sub',],
                 'submenuOptions' => ['class' => 'sub'],
