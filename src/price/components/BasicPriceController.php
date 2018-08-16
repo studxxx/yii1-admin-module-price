@@ -9,6 +9,9 @@ class BasicPriceController extends CController
     /** @var array */
     public $menu = [];
 
+    /**
+     * @throws CHttpException
+     */
     public function init()
     {
         try {
@@ -19,7 +22,7 @@ class BasicPriceController extends CController
     }
 
     /**
-     * @param null $packages
+     * @param array $packages
      * @throws CException
      */
     protected function getPage($packages = [])

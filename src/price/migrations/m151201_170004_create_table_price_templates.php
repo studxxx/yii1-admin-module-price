@@ -1,6 +1,6 @@
 <?php
 
-class m151201_170004_create_table_price_template extends CDbMigration
+class m151201_170004_create_table_price_templates extends CDbMigration
 {
     const TABLE_SCHEMA = 'price_templates';
     const TABLE_OPTIONS = 'engine=innodb character set=UTF8 collate utf8_unicode_ci;';
