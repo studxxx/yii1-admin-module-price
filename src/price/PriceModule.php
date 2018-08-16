@@ -3,8 +3,10 @@
 class PriceModule extends WebModule
 {
     const VERSION = '0.0.1';
-
+    /** @var string  */
     public static $moduleClass = __CLASS__;
+    /** @var int */
+    public static $cache = 3600;
 
     public function getCategory()
     {
@@ -92,9 +94,11 @@ class PriceModule extends WebModule
     {
         $import = [
             'price.models.*',
+            'price.models.search.*',
             'price.helpers.*',
             'price.behaviors.*',
             'price.components.*',
+            'price.components.repositories.*',
         ];
 
         foreach (Yii::app()->getModules() as $module => $data) {

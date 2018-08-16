@@ -28,13 +28,13 @@ class PriceCurrency extends CActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'code' => 'Code',
-            'name' => 'Name',
-            'value' => 'Value',
-            'default' => 'Default',
-            'created_at' => 'Created',
-            'updated_at' => 'Updated',
+            'id' => PriceModule::t('MODEL_ID'),
+            'code' => PriceModule::t('MODEL_CODE'),
+            'name' => PriceModule::t('MODEL_NAME'),
+            'value' => PriceModule::t('MODEL_CURRENCY_VALUE'),
+            'default' => PriceModule::t('MODEL_BASIC'),
+            'created_at' => PriceModule::t('MODEL_CREATED_AT'),
+            'updated_at' => PriceModule::t('MODEL_UPDATED_AT'),
         ];
     }
 
@@ -54,7 +54,19 @@ class PriceCurrency extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
+                'setUpdateOnCreate' => true,
             ]
         ];
+    }
+
+    protected function beforeSave()
+    {
+        if ($this->default == 1) {
+            self::updateAll(['default' => 0]);
+            if ($this->value != 1) {
+                $this->value = 1;
+            }
+        }
+        return parent::beforeSave();
     }
 }

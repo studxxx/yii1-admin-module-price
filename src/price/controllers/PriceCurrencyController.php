@@ -30,15 +30,15 @@ class PriceCurrencyController extends BasicPriceController
 
     public function actionIndex()
     {
-        $searchModel = new CurrencySearch();
+        $searchModel = new PriceCurrencySearch();
 
-        if (Yii::app()->request->getQuery('CurrencySearch')) {
-            $searchModel->attributes = Yii::app()->request->getQuery('CurrencySearch');
+        if (Yii::app()->request->getQuery('PriceCurrencySearch')) {
+            $searchModel->attributes = Yii::app()->request->getQuery('PriceCurrencySearch');
         }
 
         $this->render('index', [
             'model' => $searchModel,
-            'dataProvider' => $searchModel->search(Yii::app()->request->getQuery('CurrencySearch'))
+            'dataProvider' => $searchModel->search(Yii::app()->request->getQuery('PriceCurrencySearch'))
         ]);
     }
 

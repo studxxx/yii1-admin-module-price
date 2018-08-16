@@ -6,11 +6,19 @@
  * @property string $name
  * @property string $value
  * @property integer $default
- * @property integer $created
- * @property integer $updated
+ * @property integer $created_at
+ * @property integer $updated_at
  */
 class PriceCurrencySearch extends CModel
 {
+    public $id;
+    public $code;
+    public $name;
+    public $value;
+    public $default;
+    public $created_at;
+    public $updated_at;
+
     public function rules()
     {
         return [
@@ -30,13 +38,13 @@ class PriceCurrencySearch extends CModel
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'code' => 'Code',
-            'name' => 'Name',
-            'value' => 'Value',
-            'default' => 'Default',
-            'created_at' => 'Created',
-            'updated_at' => 'Updated',
+            'id' => PriceModule::t('T_ID'),
+            'code' => PriceModule::t('T_CODE'),
+            'name' => PriceModule::t('T_NAME'),
+            'value' => PriceModule::t('T_VALUE'),
+            'default' => PriceModule::t('T_DEFAULT'),
+            'created_at' => PriceModule::t('T_CREATED_AT'),
+            'updated_at' => PriceModule::t('T_UPDATED_AT'),
         );
     }
 
@@ -69,8 +77,8 @@ class PriceCurrencySearch extends CModel
         $criteria->compare('name', $this->name, true);
         $criteria->compare('value', $this->value, true);
         $criteria->compare('value', $this->default);
-        $criteria->compare('created', $this->created);
-        $criteria->compare('updated', $this->updated);
+        $criteria->compare('created_at', $this->created_at);
+        $criteria->compare('updated_at', $this->updated_at);
 
         return $dataProvider;
     }
