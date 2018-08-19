@@ -5,6 +5,7 @@
  * @property integer $supplier_id
  * @property integer $from
  * @property integer $to
+ * @property integer $value
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -50,6 +51,7 @@ class PriceRange extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
+                'setUpdateOnCreate' => true,
             ]
         ];
     }

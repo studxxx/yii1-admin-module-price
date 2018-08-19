@@ -15,8 +15,12 @@ $this->beginWidget('application.components.widgets.WPortlet', [
     'portletMenu' => [[
         'label' => '<i class="icon-plus"></i>',
         'url' => ['create'],
-        'linkOptions' => ['class' => 'btn btn-mini', 'title' => 'Create Currency'],
-        'visible' => Yii::app()->user->checkAccess(Users::ROLE_ADMIN)
+        'linkOptions' => [
+            'class' => 'btn btn-mini tooltip-bottom',
+            'title' => PriceModule::t('T_BUTTON_ADD_CURRENCY'),
+            'data-toggle' => "tooltip",
+        ],
+        'visible' => Yii::app()->user->checkAccess(Users::ROLE_ADMIN),
     ]],
 ]);
 

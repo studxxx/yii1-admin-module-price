@@ -94,11 +94,13 @@ class PriceModule extends WebModule
     {
         $import = [
             'price.models.*',
+            'price.models.forms.*',
             'price.models.search.*',
             'price.helpers.*',
             'price.behaviors.*',
             'price.components.*',
             'price.components.repositories.*',
+            'price.components.services.*',
         ];
 
         foreach (Yii::app()->getModules() as $module => $data) {

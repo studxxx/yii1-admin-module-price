@@ -15,9 +15,9 @@ return [
     'MODEL_CODE' => 'Код',
     'MODEL_CURRENCY_VALUE' => 'Курс валюти',
     'MODEL_BASIC' => 'Базова валюта',
-    'MENU_CREATE_CURRENCY' => 'Додати валюту',
     'MODEL_CREATED_AT' => 'Створено',
     'MODEL_UPDATED_AT' => 'Оновлено',
+    'MODEL_STATUS_PRICE' => 'Статус',
 
     'MODEL_PRICE' => 'Ціна',
     'MODEL_SUPPLIER_PRICE' => 'Ціна поставщика',
@@ -45,6 +45,8 @@ return [
     'MODEL_OUTPUT_FILE' => 'Імпортований прайс',
     // Menu
     'MENU_PRICES' => 'Прайси',
+    'MENU_CREATE_CURRENCY' => 'Додати валюту',
+    'T_MENU_PRICE' => 'Прайс',
 
     'MENU_MANAGE_IMPORT' => 'Імпорт прайсів',
     'MENU_LIST_IMPORT' => 'Список імпортованих прайсів',
@@ -63,8 +65,6 @@ return [
     'MENU_LIST_USERS' => 'Список користувачів',
     'MENU_ADD_USER' => 'Додати користувача',
 
-
-
     // Buttons
     'BUTTON_SAVE' => 'Зберегти',
     'BUTTON_CREATE' => 'Створити',
@@ -77,6 +77,9 @@ return [
     'BUTTON_MANAGE_ITEMS' => 'Журнал товарів',
     'BUTTON_VIEW_ITEM' => 'Перегляд товару',
     'BUTTON_SITEMAP_GENERATOR' => 'Генерувати сайтмап',
+    'T_BUTTON_ADD_PRICE' => 'Додати прайс',
+    'T_BUTTON_IMPORT_PRODUCTS' => 'Імпортувати продукти',
+    'T_BUTTON_ADD_CURRENCY' => 'Додати валюту',
 
     // FORMS
     'FORM_ID' => '#',
@@ -88,6 +91,7 @@ return [
     'T_FORM_DELIVERY' => 'Доставка',
 
     // Titles phrases
+    'T_PRICES' => 'Прайси',
     'MARGIN_PRICE' => 'Націнка на товар',
     'MARGIN_SAVE' => 'Націнку збережено',
     'MARGIN_NOT_SAVE' => 'Націнка не збереглась',

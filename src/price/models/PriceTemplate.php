@@ -13,7 +13,7 @@ class PriceTemplate extends CActiveRecord
 {
     public function tableName()
     {
-        return 'price_currencies';
+        return 'price_templates';
     }
 
     public function rules()
@@ -53,6 +53,7 @@ class PriceTemplate extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
+                'setUpdateOnCreate' => true,
             ]
         ];
     }

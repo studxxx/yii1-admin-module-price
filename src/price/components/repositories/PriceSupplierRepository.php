@@ -2,7 +2,7 @@
 
 class PriceSupplierRepository
 {
-    public function get($id)
+    public function get($id): PriceSupplier
     {
         if(!$supplier = PriceSupplier::model()->findByPk($id)) {
             throw new RuntimeException('Supplier not found!');

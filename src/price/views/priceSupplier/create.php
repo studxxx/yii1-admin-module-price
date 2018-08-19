@@ -1,6 +1,7 @@
 <?php
 /* @var $this PriceSupplierController */
 /* @var $model PriceSupplier */
+/* @var $currencies array */
 
 $this->breadcrumbs = [
     PriceModule::t('MENU_PRICES') => ['price/index'],
@@ -9,7 +10,7 @@ $this->breadcrumbs = [
 ];
 
 $this->beginWidget('application.components.widgets.WPortlet', [
-    'title' => 'Create Supplier',
+    'title' => PriceModule::t('T_CREATE_SUPPLIER'),
     'iconTitle' => 'icon-home',
     'hideConfigButton' => true,
     'hideRefreshButton' => true,
@@ -17,7 +18,8 @@ $this->beginWidget('application.components.widgets.WPortlet', [
 ]);
 
 $this->renderPartial('_form', [
-    'model' => $model
+    'model' => $model,
+    'currencies' => $currencies,
 ]);
 
 $this->endWidget();
