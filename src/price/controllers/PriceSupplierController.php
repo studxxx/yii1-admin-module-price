@@ -15,7 +15,9 @@ class PriceSupplierController extends BasicPriceController
         return [
             [
                 'allow',
-                'actions' => ['index', 'view', 'create', 'update', 'template', 'admin', 'delete'],
+                'actions' => [
+                    'index', 'view', 'create', 'update', 'template', 'admin', 'delete', 'rangeRow', 'templateRow'
+                ],
                 'roles' => [Users::ROLE_MANAGER],
             ],
             [
@@ -37,6 +39,7 @@ class PriceSupplierController extends BasicPriceController
         $this->render('index', [
             'model' => $searchModel,
             'dataProvider' => $searchModel->search(Yii::app()->request->getQuery('PriceSupplierSearch')),
+            'currencies' => CHtml::listData(PriceCurrency::model()->findAll(), 'id', 'name'),
         ]);
     }
 
@@ -66,72 +69,34 @@ class PriceSupplierController extends BasicPriceController
 
         $this->render('create', [
             'model' => $model,
+            'currencies' => CHtml::listData(PriceCurrency::model()->findAll(), 'id', 'name'),
         ]);
     }
 
     /**
-     * @todo loadMultiForm
-     * @param integer $id
+     * @param $id
      * @throws CHttpException
+     * @throws InvalidConfigException
+     * @throws ReflectionException
      */
     public function actionUpdate($id)
     {
-        $model = $this->loadModel($id);
+        $supplier = $this->loadModel($id);
 
-        $template = new TemplateForm();
+        $form = new PriceSupplierForm($supplier);
 
-        if (!empty($model->template)) {
-            $template->attributes = $model->template;
-        }
-
-        if (Yii::app()->request->getPost('PriceSupplier')) {
-            $model->attributes = Yii::app()->request->getPost('PriceSupplier');
-            if ($model->save()) {
-                $this->redirect(['view', 'id' => $model->id]);
-            }
-        }
-
-        if (Yii::app()->request->getPost('TemplateForm')) {
-            $template->attributes = Yii::app()->request->getPost('TemplateForm');
-            if ($template->validate()) {
-                $model->template = JSON::encode($template);
-                $model->save();
-
-                Yii::app()->end();
-            } else {
-                echo 'Error data';
-                Yii::app()->end();
-            }
-        }
-
-        $margin = new MarginForm();
-
-        if (isset($_POST['MarginForm'])) {
-            // Делаем переиндексацию и валидацию данных
-            $result = [];
-            foreach ($_POST['MarginForm'] as $data) {
-                $margin->attributes = $data;
-
-                if (!$margin->validate()) {
-                    echo 'Error data';
-                    Yii::app()->end();
-                }
-                if (!empty($data['condition']) && !empty($data['value'])) {
-                    $result[] = $data;
-                }
-            }
-            $model->margin = $result;
-
-            if ($model->save()) {
-                echo 1;
-                Yii::app()->end();
+        if ($form->load($_POST) && $form->validate()) {
+            try {
+                $this->service->edit($supplier, $form);
+                $this->redirect(['view', 'id' => $supplier->id]);
+            } catch (CException $e) {
+                // @todo flash
             }
         }
 
         $this->render('update', [
-            'model' => $model,
-            'template' => $template,
-            'margin' => $margin,
+            'model' => $form,
+            'supplier' => $supplier,
         ]);
     }
 
@@ -176,5 +141,39 @@ class PriceSupplierController extends BasicPriceController
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    /**
+     * @param integer $total
+     * @throws CException
+     */
+    public function actionRangeRow($total)
+    {
+        Yii::import('bootstrap.widgets.TbActiveForm');
+        $this->renderPartial('_form_range', [
+            'form' => new TbActiveForm(),
+            'index' => $total,
+            'range' => new PriceRangeForm(),
+        ]);
+    }
+
+    /**
+     * @param integer $total
+     * @throws CException
+     */
+    public function actionTemplateRow($total)
+    {
+        Yii::import('bootstrap.widgets.TbActiveForm');
+        $this->renderPartial('_form_template', [
+            'form' => new TbActiveForm(),
+            'index' => $total,
+            'template' => new PriceTemplateForm(),
+        ]);
+    }
+
+    protected function getService()
+    {
+        $suppliers = new PriceSupplierRepository();
+        return new SupplierService($suppliers);
     }
 }

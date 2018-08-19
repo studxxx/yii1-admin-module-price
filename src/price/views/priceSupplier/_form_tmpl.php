@@ -16,7 +16,7 @@
     ],
 ]); ?>
 
-<?= PriceModule::t('NOTIFICATION_TEMPLATE_ENTER_POSITION'); ?>
+<?= PriceModule::t('T_FIELD_REQUIRED'); ?>
 
 <?= $form->errorSummary($template); ?>
 

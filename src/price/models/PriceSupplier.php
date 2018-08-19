@@ -11,6 +11,9 @@
  * @property string $note
  * @property integer $created_at
  * @property integer $updated_at
+ * @property PriceCurrency $currency
+ * @property PriceRange[] $ranges
+ * @property PriceTemplate[] $templates
  */
 class PriceSupplier extends CActiveRecord
 {
@@ -37,6 +40,7 @@ class PriceSupplier extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
+                'setUpdateOnCreate' => true,
             ]
         ];
     }

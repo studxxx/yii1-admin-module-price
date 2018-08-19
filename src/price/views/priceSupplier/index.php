@@ -1,6 +1,7 @@
 <?php
 /* @var $this PriceSupplierController */
 /* @var $model PriceSupplier */
+/* @var $currencies array */
 
 $this->breadcrumbs = [
     PriceModule::t('MENU_PRICES') => ['price/index'],
@@ -8,7 +9,7 @@ $this->breadcrumbs = [
 ];
 
 $this->beginWidget('application.components.widgets.WPortlet', [
-    'title' => 'List',
+    'title' => PriceModule::t('MENU_SUPPLIERS'),
     'iconTitle' => 'icon-th-list',
     'hideConfigButton' => true,
     'hideRefreshButton' => true,
@@ -28,13 +29,19 @@ $this->widget('bootstrap.widgets.TbGridView', [
         'name',
         'email',
         'phone',
-        'currency_id',
-        'created' => [
-            'name' => 'created',
+        'currency_id' => [
+            'name' => 'currency_id',
+            'value' => function (PriceSupplier $data) {
+                return $data->currency->name;
+            },
+            'filter' => $currencies,
+        ],
+        'created_at' => [
+            'name' => 'created_at',
             'value' => 'DateHelper::datetime($data, "created_at")',
         ],
-        'updated' => [
-            'name' => 'updated',
+        'updated_at' => [
+            'name' => 'updated_at',
             'value' => 'DateHelper::datetime($data, "updated_at")',
         ],
         [

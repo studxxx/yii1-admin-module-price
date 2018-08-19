@@ -12,10 +12,19 @@
  */
 class PriceSupplierSearch extends CModel
 {
+    public $id;
+    public $currency_id;
+    public $name;
+    public $title;
+    public $email;
+    public $phone;
+    public $created_at;
+    public $updated_at;
+
     public function rules()
     {
         return [
-            ['id, name, email, phone, created_at, updated_at', 'safe', 'on' => 'search'],
+            ['id, currency_id, name, email, phone, created_at, updated_at', 'safe'],
         ];
     }
 
