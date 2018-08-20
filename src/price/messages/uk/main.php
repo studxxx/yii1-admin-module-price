@@ -18,6 +18,7 @@ return [
     'MODEL_CREATED_AT' => 'Створено',
     'MODEL_UPDATED_AT' => 'Оновлено',
     'MODEL_STATUS_PRICE' => 'Статус',
+    'MODEL_PRICE_FILE' => 'Файл прайсу',
 
     'MODEL_PRICE' => 'Ціна',
     'MODEL_SUPPLIER_PRICE' => 'Ціна поставщика',
@@ -44,9 +45,12 @@ return [
     'MODEL_NAME_FILE' => 'Прайс',
     'MODEL_OUTPUT_FILE' => 'Імпортований прайс',
     // Menu
-    'MENU_PRICES' => 'Прайси',
+    'T_MENU_PRICES' => 'Прайси',
     'MENU_CREATE_CURRENCY' => 'Додати валюту',
     'T_MENU_PRICE' => 'Прайс',
+    'T_MENU_SUPPLIERS' => 'Поставщики',
+    'T_MENU_CURRENCIES' => 'Валюта',
+    'T_MENU_ADD_PRICE' => 'Додати прайс',
 
     'MENU_MANAGE_IMPORT' => 'Імпорт прайсів',
     'MENU_LIST_IMPORT' => 'Список імпортованих прайсів',
@@ -77,6 +81,7 @@ return [
     'BUTTON_MANAGE_ITEMS' => 'Журнал товарів',
     'BUTTON_VIEW_ITEM' => 'Перегляд товару',
     'BUTTON_SITEMAP_GENERATOR' => 'Генерувати сайтмап',
+    'T_BUTTON_PRICES' => 'Прайси',
     'T_BUTTON_ADD_PRICE' => 'Додати прайс',
     'T_BUTTON_IMPORT_PRODUCTS' => 'Імпортувати продукти',
     'T_BUTTON_ADD_CURRENCY' => 'Додати валюту',
@@ -91,6 +96,7 @@ return [
     'T_FORM_DELIVERY' => 'Доставка',
 
     // Titles phrases
+    'T_PRICE' => 'Прайс',
     'T_PRICES' => 'Прайси',
     'MARGIN_PRICE' => 'Націнка на товар',
     'MARGIN_SAVE' => 'Націнку збережено',
@@ -122,6 +128,7 @@ return [
     'T_TEMPLATE_ENTER_POSITION' => '<p>Введіть позицію рівній колонці поля прайсу</p>',
     'T_SUCCESS_ADD_PARAM' => '<strong>Well done!</strong> You\'re successful added new config param!',
     'T_SUCCESS_UPDATE_PARAM' => '<strong>Well done!</strong> Param updated!',
+    'T_CONFIRM_DELETE_PRODUCT' => 'Ви впевнені що хочете видалити цей товар',
     // Errors
 
     'T_IMPORTS' => 'Імпорт прайсів',

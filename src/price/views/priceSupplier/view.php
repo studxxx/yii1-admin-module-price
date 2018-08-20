@@ -2,10 +2,11 @@
 /* @var $this PriceSupplierController */
 /* @var $model PriceSupplier */
 
+$this->pageTitle = $model->name;
 $this->breadcrumbs = [
     PriceModule::t('MENU_PRICES') => ['price/index'],
     PriceModule::t('MENU_SUPPLIERS') => ['index'],
-    $model->name,
+    $this->pageTitle,
 ];
 
 $this->beginWidget('application.components.widgets.WPortlet', [

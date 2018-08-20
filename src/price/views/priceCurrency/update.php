@@ -2,10 +2,10 @@
 /* @var $this CurrencyController */
 /* @var $model Currency */
 
-$this->breadcrumbs = array(
-    ConsoleModule::t('MENU_CURRENCIES') => ['index'],
-    ConsoleModule::t('MENU_UPDATE'),
-);
+$this->breadcrumbs = [
+    PriceModule::t('MENU_CURRENCIES') => ['index'],
+    PriceModule::t('MENU_UPDATE'),
+];
 
 $this->beginWidget('application.components.widgets.WPortlet', [
     'title' => 'Update Currency: ' . mb_strtoupper($model->name),

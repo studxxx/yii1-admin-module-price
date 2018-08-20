@@ -3,7 +3,7 @@
 /* @var $supplier PriceSupplier */
 /* @var $range PriceRangeForm */
 /* @var $template PriceTemplateForm */
-
+$this->pageTitle = PriceModule::t('MENU_UPDATE') . ': ' . $supplier->name;
 $this->breadcrumbs = [
     PriceModule::t('MENU_PRICES') => ['price/index'],
     PriceModule::t('MENU_SUPPLIERS') => ['index'],

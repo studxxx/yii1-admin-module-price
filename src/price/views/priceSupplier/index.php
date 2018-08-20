@@ -2,10 +2,10 @@
 /* @var $this PriceSupplierController */
 /* @var $model PriceSupplier */
 /* @var $currencies array */
-
+$this->pageTitle = PriceModule::t('MENU_SUPPLIERS');
 $this->breadcrumbs = [
     PriceModule::t('MENU_PRICES') => ['price/index'],
-    PriceModule::t('MENU_SUPPLIERS'),
+    $this->pageTitle,
 ];
 
 $this->beginWidget('application.components.widgets.WPortlet', [
@@ -45,7 +45,7 @@ $this->widget('bootstrap.widgets.TbGridView', [
             'value' => 'DateHelper::datetime($data, "updated_at")',
         ],
         [
-            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonGroupColumn',
         ],
     ],
 ]);

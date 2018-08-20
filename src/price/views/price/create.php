@@ -1,15 +1,17 @@
 <?php
-/* @var $this CurrencyController */
-/* @var $model Currency */
-$this->pageTitle = PriceModule::t('MENU_CREATE');
+/* @var $this PriceController */
+/* @var $model Price */
+
+$this->pageTitle = PriceModule::t('T_MENU_CREATE');
 $this->breadcrumbs = [
-    PriceModule::t('MENU_PRICES') => ['price/index'],
-    PriceModule::t('MENU_CURRENCIES') => ['index'],
+    PriceModule::t('T_MENU_PRICES') => ['index'],
     $this->pageTitle,
 ];
 
+
+
 $this->beginWidget('application.components.widgets.WPortlet', [
-    'title' => PriceModule::t('MENU_CREATE_CURRENCY'),
+    'title' => PriceModule::t('T_MENU_ADD_PRICE'),
     'iconTitle' => 'icon-money',
     'contentCssClass' => 'widget-body form',
     'hideConfigButton' => true,
@@ -17,12 +19,15 @@ $this->beginWidget('application.components.widgets.WPortlet', [
     'portletMenu' => [[
         'label' => '<i class="icon-th-list"></i>',
         'url' => ['index'],
-        'linkOptions' => ['class' => 'btn btn-mini', 'title' => 'List Currency']
+        'linkOptions' => [
+            'class' => 'btn btn-mini',
+            'title' => PriceModule::t('T_BUTTON_PRICES')
+        ]
     ]],
 ]);
 
 $this->renderPartial('_form', [
-    'model' => $model
+    'model' => $model,
 ]);
 
 $this->endWidget();
