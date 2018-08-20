@@ -2,9 +2,10 @@
 /* @var $this PriceCurrencyController */
 /* @var $model PriceCurrency */
 
+$this->pageTitle = PriceModule::t('MENU_CURRENCIES');
 $this->breadcrumbs = [
-    PriceModule::t('MENU_PRICES') => ['price/index'],
-    PriceModule::t('MENU_CURRENCIES')
+    PriceModule::t('T_MENU_PRICES') => ['price/index'],
+    $this->pageTitle
 ];
 
 $this->beginWidget('application.components.widgets.WPortlet', [

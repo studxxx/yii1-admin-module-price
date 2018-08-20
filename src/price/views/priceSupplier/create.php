@@ -3,10 +3,11 @@
 /* @var $model PriceSupplier */
 /* @var $currencies array */
 
+$this->pageTitle = PriceModule::t('MENU_CREATE');
 $this->breadcrumbs = [
     PriceModule::t('MENU_PRICES') => ['price/index'],
     PriceModule::t('MENU_SUPPLIERS') => ['index'],
-    PriceModule::t('MENU_CREATE'),
+    $this->pageTitle,
 ];
 
 $this->beginWidget('application.components.widgets.WPortlet', [

@@ -113,6 +113,7 @@ class PriceProduct extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
+                'setUpdateOnCreate' => true,
             ]
         ];
     }

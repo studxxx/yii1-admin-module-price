@@ -69,9 +69,7 @@ class PriceController extends BasicPriceController
             $model->price_file = CUploadedFile::getInstance($model, 'price_file');
             if ($model->save()) {
                 $model->price_file
-                    ->saveAs(
-                        Helpers::getPublicPath(Yii::app()->config->get('IMPORT.PATH_UPLOAD')) . $model->price_file
-                    );
+                    ->saveAs(Helpers::getPublicPath(Yii::app()->config->get('IMPORT.PATH_UPLOAD')) . $model->price_file);
                 $this->redirect(['index']);
             }
         }

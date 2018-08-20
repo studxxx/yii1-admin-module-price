@@ -11,10 +11,18 @@
  */
 class PriceSearch extends CModel
 {
+    public $id;
+    public $supplier_id;
+    public $price_file;
+    public $csv_file;
+    public $status;
+    public $created_at;
+    public $updated_at;
+
     public function rules()
     {
         return [
-            ['id, price_file, supplier_id, status, created_at, updated_at', 'safe', 'on' => 'search'],
+            ['id, price_file, supplier_id, status, created_at, updated_at', 'safe'],
         ];
     }
 
@@ -25,9 +33,6 @@ class PriceSearch extends CModel
         ];
     }
 
-    /**
-     * @return array customized attribute labels (name=>label)
-     */
     public function attributeLabels()
     {
         return array(

@@ -34,6 +34,23 @@ class PriceProductHelper
         ];
     }
 
+    public static function visible()
+    {
+        return [
+            PriceProduct::HIDE => PriceModule::t('LABEL_HIDE'),
+            PriceProduct::SHOW => PriceModule::t('LABEL_SHOW'),
+        ];
+    }
+
+    public static function exists()
+    {
+        return [
+            PriceProduct::EXIST_UNAVAILABLE => PriceModule::t('LABEL_NOT_EXIST'),
+            PriceProduct::EXIST_AVAILABLE => PriceModule::t('LABEL_EXIST'),
+            PriceProduct::EXIST_UNDER_ORDER => PriceModule::t('LABEL_BY_ORDER'),
+        ];
+    }
+
     public static function getType(PriceProduct $product)
     {
         $types = self::types();
@@ -68,7 +85,7 @@ class PriceProductHelper
         return CHtml::tag('span', ['class' => 'badge badge-' . $class], $content[$product->visible]);
     }
 
-    public function getExist(PriceProduct $product)
+    public static function getExist(PriceProduct $product)
     {
         $class = 'success';
         $content = [

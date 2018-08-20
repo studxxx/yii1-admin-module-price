@@ -25,9 +25,7 @@ class Price extends CActiveRecord
         return [
             ['supplier_id, status, created_at, updated_at', 'numerical', 'integerOnly' => true],
             ['supplier_id', 'required'],
-            ['price_file', 'length', 'max' => 255],
-//            ['name', 'file', 'types' => 'xlsx,xls,csv'],
-            ['id, price_file, supplier_id, status, created_at, updated_at', 'safe', 'on' => 'search'],
+            ['price_file', 'file', 'types' => 'xlsx,xls,csv'],
         ];
     }
 
@@ -45,6 +43,7 @@ class Price extends CActiveRecord
                 'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
+                'setUpdateOnCreate' => true,
             ]
         ];
     }
