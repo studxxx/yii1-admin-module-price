@@ -2,7 +2,7 @@
 
 /**
  * Class PriceController
- * @property ClientGearmanService $amqp
+ * @property ClientService $gearman
  */
 class PriceController extends BasicPriceController
 {
@@ -78,10 +78,14 @@ class PriceController extends BasicPriceController
                 $model->scenario = 'default';
                 $model->price_file = $model->price_file->getName();
 
-                $this->amqp->send(JSON::encode([
-                    'data' => $model,
-                    'performer' => 'ImportPriceBehavior'
-                ]), null, ClientGearmanService::PRIORITY_LOW);
+                $this->gearman->send(
+                    JSON::encode([
+                        'data' => $model,
+                        'performer' => 'vendor.studxxx.yii1-admin-module-price.src.price.behaviors.ImportPriceBehavior'
+                    ]),
+                    null,
+                    ClientService::PRIORITY_LOW
+                );
 
                 $this->redirect(['index']);
             }
@@ -136,13 +140,13 @@ class PriceController extends BasicPriceController
         }
     }
 
-    protected function getAmqp()
+    protected function getGearman()
     {
-        $client = new GearmanClient();
-        $client->addServer(Yii::app()->params['gearman']['host'], Yii::app()->params['gearman']['port']);
-        $amqp = new ClientGearmanService($client, new CLogger());
-        $amqp->consumer = Yii::app()->params['gearman']['worker'];
+        $gearman = new ClientService();
+        $gearman->host = Yii::app()->params['gearman']['host'];
+        $gearman->port = Yii::app()->params['gearman']['port'];
+        $gearman->consumer = Yii::app()->params['gearman']['consumer'];
 
-        return $amqp;
+        return $gearman;
     }
 }
