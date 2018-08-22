@@ -16,13 +16,13 @@
     "clevertech/yii-booster": "3.1.1",
     "phpoffice/phpexcel": "^1.8",
     "studxxx/yii-components": "^0.0.1",
-    "studxxx/yii1-gearman": "*",
+    "studxxx/yii1-gearman": "^0.0.1",
     "yiisoft/yii": "^1.1"
   },
   "repositories": [
     {
       "type": "git",
-      "url": "git@bitbucket.org:studxxx/yii1-gearman.git"
+      "url": "https://github.com/studxxx/yii1-gearman.git"
     },
     {
       "type"   : "git",

@@ -25,7 +25,8 @@ class Price extends CActiveRecord
         return [
             ['supplier_id, status, created_at, updated_at', 'numerical', 'integerOnly' => true],
             ['supplier_id', 'required'],
-            ['price_file', 'file', 'types' => 'xlsx,xls,csv'],
+            ['price_file', 'file', 'types' => 'xlsx,xls,csv', 'on' => 'insert'],
+            ['price_file', 'length', 'max' => 255, 'on' => 'default'],
         ];
     }
 

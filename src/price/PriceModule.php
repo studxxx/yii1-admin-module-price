@@ -133,13 +133,6 @@ class PriceModule extends WebModule
                 'default' => 'yii.worker',
             ],
             [
-                'param' => 'PRICE.PATH_UPLOAD_IMPORT',
-                'label' => 'Директорія для завантаження прайсів',
-                'value' => 'prices',
-                'type' => 'string',
-                'default' => 'prices',
-            ],
-            [
                 'param' => 'PRICE.PATH_UPLOAD',
                 'label' => 'Path to upload price',
                 'value' => 'uploads/prices',
@@ -186,7 +179,11 @@ class PriceModule extends WebModule
         Yii::app()->config->delete([
             'PRICE.PRE_PAGE',
             'PRICE.WORKER',
-            'PRICE.PATH_UPLOAD_IMPORT'
+            'PRICE.PATH_UPLOAD',
+            'PRICE.PATH_UPLOAD_IMPORT',
+            'PRICE.CHUNK_SIZE',
+            'PRICE.DISPLAY_LOG',
+            'PRICE.DELIVERY',
         ]);
 
         FileHelper::removeDirectory(Yii::getPathOfAlias('webroot.uploads.imported'));

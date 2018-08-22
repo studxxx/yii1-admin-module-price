@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class PriceController
+ * @property ClientService $gearman
+ */
 class PriceController extends BasicPriceController
 {
     public function filters()
@@ -70,6 +74,19 @@ class PriceController extends BasicPriceController
             if ($model->save()) {
                 $model->price_file
                     ->saveAs(Helpers::getPublicPath(Yii::app()->config->get('IMPORT.PATH_UPLOAD')) . $model->price_file);
+
+                $model->scenario = 'default';
+                $model->price_file = $model->price_file->getName();
+
+                $this->gearman->send(
+                    JSON::encode([
+                        'data' => $model,
+                        'performer' => 'vendor.studxxx.yii1-admin-module-price.src.price.behaviors.ImportPriceBehavior'
+                    ]),
+                    null,
+                    ClientService::PRIORITY_LOW
+                );
+
                 $this->redirect(['index']);
             }
         }
@@ -121,5 +138,15 @@ class PriceController extends BasicPriceController
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    protected function getGearman()
+    {
+        $gearman = new ClientService();
+        $gearman->host = Yii::app()->params['gearman']['host'];
+        $gearman->port = Yii::app()->params['gearman']['port'];
+        $gearman->consumer = Yii::app()->params['gearman']['consumer'];
+
+        return $gearman;
     }
 }
