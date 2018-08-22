@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class PriceController
+ * @property ClientGearmanService $amqp
+ */
 class PriceController extends BasicPriceController
 {
     public function filters()
@@ -70,6 +74,15 @@ class PriceController extends BasicPriceController
             if ($model->save()) {
                 $model->price_file
                     ->saveAs(Helpers::getPublicPath(Yii::app()->config->get('IMPORT.PATH_UPLOAD')) . $model->price_file);
+
+                $model->scenario = 'default';
+                $model->price_file = $model->price_file->getName();
+
+                $this->amqp->send(JSON::encode([
+                    'data' => $model,
+                    'performer' => 'ImportPriceBehavior'
+                ]), null, ClientGearmanService::PRIORITY_LOW);
+
                 $this->redirect(['index']);
             }
         }
@@ -121,5 +134,15 @@ class PriceController extends BasicPriceController
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    protected function getAmqp()
+    {
+        $client = new GearmanClient();
+        $client->addServer(Yii::app()->params['gearman']['host'], Yii::app()->params['gearman']['port']);
+        $amqp = new ClientGearmanService($client, new CLogger());
+        $amqp->consumer = Yii::app()->params['gearman']['worker'];
+
+        return $amqp;
     }
 }
