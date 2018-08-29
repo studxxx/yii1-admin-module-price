@@ -86,11 +86,11 @@ $this->widget('bootstrap.widgets.TbDetailView', [
         ],
         'created_at' => [
             'name' => 'created_at',
-            'value' => PriceHelper::date($model, 'created_at')
+            'value' => DateHelper::datetime($model, 'created_at')
         ],
         'updated_at' => [
             'name' => 'updated_at',
-            'value' => PriceHelper::date($model, 'updated_at')
+            'value' => DateHelper::datetime($model, 'updated_at')
         ],
     ],
 ]);

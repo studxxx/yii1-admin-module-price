@@ -23,9 +23,4 @@ class PriceHelper
         }
         return CHtml::tag('span', ['class' => "label label-$class"], $statuses[$model->status]);
     }
-
-    public static function date($model, $attribute)
-    {
-        return date("d.m.Y, H:i", $model->$attribute);
-    }
 }

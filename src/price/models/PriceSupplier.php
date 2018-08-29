@@ -77,4 +77,34 @@ class PriceSupplier extends CActiveRecord
     {
         return parent::model($className);
     }
+
+    public function changeCurrency(int $currencyId)
+    {
+        $this->currency_id = $currencyId;
+    }
+
+    public function setRange($from, $to, $value)
+    {
+        $ranges = $this->ranges;
+
+        foreach ($ranges as $range) {
+            if ($range->isForRange($from, $to)) {
+                $range->change($value);
+                $this->ranges = $ranges;
+                return;
+            }
+        }
+
+        if ($value === null) {
+            return;
+        }
+
+        $newRange = new PriceRange();
+        $newRange->from = $from;
+        $newRange->to = $to;
+        $newRange->value = $value;
+
+        $ranges[] = $newRange;
+        $this->ranges = $ranges;
+    }
 }

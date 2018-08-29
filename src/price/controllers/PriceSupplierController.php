@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @property SupplierService $service
+ */
 class PriceSupplierController extends BasicPriceController
 {
     public function filters()
@@ -87,7 +90,7 @@ class PriceSupplierController extends BasicPriceController
 
         if ($form->load($_POST) && $form->validate()) {
             try {
-                $this->service->edit($supplier, $form);
+                $this->service->edit($id, $form);
                 $this->redirect(['view', 'id' => $supplier->id]);
             } catch (CException $e) {
                 // @todo flash
@@ -174,6 +177,7 @@ class PriceSupplierController extends BasicPriceController
     protected function getService()
     {
         $suppliers = new PriceSupplierRepository();
-        return new SupplierService($suppliers);
+        $currencies = new PriceCurrencyRepository();
+        return new SupplierService($suppliers, $currencies);
     }
 }

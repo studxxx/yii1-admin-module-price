@@ -65,9 +65,9 @@ class PriceProduct extends CActiveRecord
     public function rules()
     {
         return [
-            ['supplier_id', 'required'],
-            ['id, exist, supplier_id, created, updated, visible, type, status, delivery, state, tecdoc_article_id, tecdoc_supplier_id', 'numerical', 'integerOnly' => true],
-            ['search, sku, brand, name, price, count, marker, constructions, cross_numbers, marker, tecdoc_article_nr, tecdoc_supplier_brand', 'length', 'max' => 255],
+            ['token, supplier_id', 'required'],
+            ['id, exist, supplier_id, created_at, updated_at, visible, type, status, delivery, state, tecdoc_article_id, tecdoc_supplier_id', 'numerical', 'integerOnly' => true],
+            ['token, search, sku, brand, name, price, count, constructions, cross_numbers, tecdoc_article_nr, tecdoc_supplier_brand', 'length', 'max' => 255],
             ['image, note', 'safe'],
             ['search, sku, name, constructions, cross_numbers', 'filter', 'filter' => 'trim'],
             ['id, search, sku, brand, name, price, exist, sid, visible, constructions, cross_numbers', 'safe', 'on' => 'search'],
@@ -95,8 +95,8 @@ class PriceProduct extends CActiveRecord
             'sid' => PriceModule::t('MODEL_SUPPLIERS_NAME'),
             'visible' => PriceModule::t('MODEL_VISIBLE'),
             'status' => PriceModule::t('main', 'T_STATUS'),
-            'created' => PriceModule::t('MODEL_CREATED'),
-            'updated' => PriceModule::t('MODEL_UPDATED'),
+            'created_at' => PriceModule::t('MODEL_CREATED'),
+            'updated_at' => PriceModule::t('MODEL_UPDATED'),
             'constructions' => PriceModule::t('T_STATUS'),
             'cross_numbers' => PriceModule::t('T_STATUS'),
             'tecdoc_article_id' => PriceModule::t('T_STATUS'),
@@ -141,5 +141,23 @@ class PriceProduct extends CActiveRecord
     public function isExistUnderOrder()
     {
         return $this->exist === self::EXIST_UNDER_ORDER;
+    }
+
+    /**
+     * @param PriceCurrency $currency
+     * @param PriceRange[] $ranges
+     */
+    public function setFinalPrice(PriceCurrency $currency, array $ranges)
+    {
+        $this->final_price = $this->price * $currency->value;
+
+        foreach ($ranges as $range) {
+            if ($range->from >= $this->final_price && $range->to <= $this->final_price
+                || ($range->from >= $this->final_price && empty($range->to))
+            ) {
+                $this->final_price = round($this->final_price * ($range->value / 100 + 1));
+                break;
+            }
+        }
     }
 }

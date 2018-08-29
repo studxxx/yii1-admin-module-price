@@ -1,10 +1,10 @@
 <?php
-/* @var $this ImportController */
+/* @var $this PriceController */
 /* @var $model Price */
 /* @var $form TbActiveForm */
 
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', [
-    'id' => 'import-form',
+    'id' => 'price-form',
     'type' => TbHtml::FORM_LAYOUT_HORIZONTAL,
     'enableAjaxValidation' => true,
     'htmlOptions' => ['enctype' => 'multipart/form-data']

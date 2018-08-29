@@ -2,12 +2,16 @@
 
 class PriceCurrencyRepository
 {
+    /**
+     * @param integer $id
+     * @return array|CActiveRecord|mixed|null|PriceCurrency
+     */
     public function get($id)
     {
-        if(!$price = PriceCurrency::model()->findByPk($id)) {
+        if(!$currency = PriceCurrency::model()->findByPk($id)) {
             throw new RuntimeException('Price not found!');
         }
-        return $price;
+        return $currency;
     }
 
     public function save(PriceCurrency $price)

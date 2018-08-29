@@ -80,19 +80,35 @@ class SupplierService
      * @param $id
      * @param PriceSupplierForm $form
      */
-    public function edit($id, PriceSupplierForm $form): void
+    public function edit($id, PriceSupplierForm $form)
     {
+
         $supplier = $this->suppliers->get($id);
         $currency = $this->currencies->get($form->currency->currency);
 
+        $supplier->name = $form->name;
+        $supplier->title = $form->title;
+        $supplier->email = $form->email;
+        $supplier->phone = $form->phone;
+        $supplier->description = $form->description;
+        $supplier->note = $form->note;
+
+        $supplier->changeCurrency($currency->id);
+
+        $supplier->revokeRanges();
+
+        foreach ($form->ranges as $range) {
+            $supplier->setRange($range->id, $range->from, $range->to, $range->value);
+        }
+
+        foreach ($form->templates as $template) {
+
+        }
+
+        var_dump($form);die;
+
 //        $brand = $this->brands->get($form->brandId);
 //        $category = $this->categories->get($form->categories->main);
-//
-//        $product->brand_id = $brand->id;
-//        $product->code = $form->code;
-//        $product->name = $form->name;
-//        $product->description = $form->description;
-//        $product->weight = $form->weight;
 //
 //        $this->products->setMeta(
 //            $product,
@@ -100,8 +116,6 @@ class SupplierService
 //            $form->meta->description,
 //            $form->meta->keywords
 //        );
-//
-//        $product->changeMainCategory($category->id);
 //
 //        $this->transaction->wrap(function () use ($product, $form) {
 //            $product->revokeCategories();

@@ -63,6 +63,14 @@ class PriceSupplierForm extends CompositeForm
         parent::__construct($scenario);
     }
 
+    public function rules()
+    {
+        return [
+            ['name, title, phone', 'length', 'max' => 255],
+            ['email', 'email'],
+            ['description, note', 'safe'],
+        ];
+    }
 
     protected function internalForms()
     {

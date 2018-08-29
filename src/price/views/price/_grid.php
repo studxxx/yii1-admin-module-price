@@ -1,6 +1,6 @@
 <?php
-/* @var $this ImportController */
-/* @var $model Import */
+/* @var $this PriceController */
+/* @var $model Price */
 
 $this->widget('bootstrap.widgets.TbGridView', [
     'id' => 'import-grid',

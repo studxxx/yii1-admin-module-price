@@ -8,6 +8,7 @@
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property PriceSupplier $supplier
  */
 class Price extends CActiveRecord
 {
@@ -33,7 +34,7 @@ class Price extends CActiveRecord
     public function relations()
     {
         return [
-            'suppliers' => [self::BELONGS_TO, 'PriceSupplier', 'supplier_id'],
+            'supplier' => [self::BELONGS_TO, 'PriceSupplier', 'supplier_id'],
         ];
     }
 
