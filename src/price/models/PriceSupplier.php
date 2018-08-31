@@ -107,4 +107,17 @@ class PriceSupplier extends CActiveRecord
         $ranges[] = $newRange;
         $this->ranges = $ranges;
     }
+
+    public function setTemplate($coordinate, $fieldName, $validator)
+    {
+        $templates = $this->templates;
+
+        $newTemplate = new PriceTemplate();
+        $newTemplate->coordinate = $coordinate;
+        $newTemplate->field_name = $fieldName;
+        $newTemplate->validator = $validator;
+
+        $templates[] = $newTemplate;
+        $this->templates = $templates;
+    }
 }

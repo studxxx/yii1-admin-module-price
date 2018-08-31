@@ -76,7 +76,7 @@ $this->widget('bootstrap.widgets.TbDetailView', [
             'type' => 'raw',
             'name' => 'supplier_id',
             'value' => function ($data) {
-                return $data->suppliers->name;
+                return $data->supplier->name;
             },
         ],
         'status' => [

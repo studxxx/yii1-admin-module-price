@@ -59,20 +59,21 @@ class PriceSupplierController extends BasicPriceController
 
     public function actionCreate()
     {
-        $model = new PriceSupplier;
+        $form = new PriceSupplierForm();
 
-         $this->performAjaxValidation($model);
+//         $this->performAjaxValidation($form);
 
-        if (Yii::app()->request->getPost('PriceSupplier')) {
-            $model->attributes = Yii::app()->request->getPost('PriceSupplier');
-            if ($model->save()) {
-                $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load($_POST) && $form->validate()) {
+            try {
+                $supplier = $this->service->create($form);
+                $this->redirect(['view', 'id' => $supplier->id]);
+            } catch (CException $e) {
+                // @todo flash and log error
             }
         }
 
         $this->render('create', [
-            'model' => $model,
-            'currencies' => CHtml::listData(PriceCurrency::model()->findAll(), 'id', 'name'),
+            'model' => $form,
         ]);
     }
 
@@ -136,11 +137,11 @@ class PriceSupplierController extends BasicPriceController
 
     /**
      * Performs the AJAX validation.
-     * @param PriceSupplier $model the model to be validated
+     * @param PriceSupplierForm $model the model to be validated
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'suppliers-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'supplier-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

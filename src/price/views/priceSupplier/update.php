@@ -5,7 +5,7 @@
 /* @var $template PriceTemplateForm */
 $this->pageTitle = PriceModule::t('MENU_UPDATE') . ': ' . $supplier->name;
 $this->breadcrumbs = [
-    PriceModule::t('MENU_PRICES') => ['price/index'],
+    PriceModule::t('T_MENU_PRICES') => ['price/index'],
     PriceModule::t('MENU_SUPPLIERS') => ['index'],
     $supplier->name => ['view', 'id' => $supplier->id],
     PriceModule::t('MENU_UPDATE'),

@@ -29,8 +29,8 @@ class PriceSupplierRepository
         }
     }
 
-    public function getList()
+    public function create(): PriceSupplier
     {
-        return CHtml::listData(PriceSupplier::model()->findAll(), 'id', 'name');
+        return new PriceSupplier();
     }
 }

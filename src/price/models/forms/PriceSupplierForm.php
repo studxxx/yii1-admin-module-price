@@ -55,9 +55,8 @@ class PriceSupplierForm extends CompositeForm
                     return $form;
                 }, $supplier->templates);
         } else {
-            $this->ranges = [
-                new PriceRangeForm()
-            ];
+            $this->currency = new PriceCurrencyForm();
+            $this->ranges = [new PriceRangeForm()];
             $this->templates = [new PriceTemplateForm];
         }
         parent::__construct($scenario);

@@ -4,7 +4,7 @@
 
 $this->pageTitle = $model->name;
 $this->breadcrumbs = [
-    PriceModule::t('MENU_PRICES') => ['price/index'],
+    PriceModule::t('T_MENU_PRICES') => ['price/index'],
     PriceModule::t('MENU_SUPPLIERS') => ['index'],
     $this->pageTitle,
 ];

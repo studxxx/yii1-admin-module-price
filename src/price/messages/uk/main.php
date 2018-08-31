@@ -142,6 +142,7 @@ return [
     'T_IMPORT_PRICE' => 'Імпорт прайсу',
     'T_UPDATE_PRICE' => 'Оновити прайс',
     'T_IMPORT_PRODUCTS' => 'Імпорт продуктів',
+    'T_RANGE_PRICE' => 'Націнка магазину',
 
     'T_CREATE_SUPPLIER' => 'Додати поставщика',
 ];

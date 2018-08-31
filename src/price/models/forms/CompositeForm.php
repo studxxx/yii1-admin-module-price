@@ -13,8 +13,28 @@ abstract class CompositeForm extends FormModel
     public function load($data, $formName = null)
     {
         $success = parent::load($data, $formName);
+        if (!$success) {
+            return false;
+        }
         foreach ($this->forms as $name => $form) {
             if (is_array($form)) {
+                /* @var $first FormModel|false */
+                $first = reset($form);
+                if ($first === false) {
+                    return false;
+                }
+                $fn = $first->formName();
+
+                $countForms = count($form);
+                $countLoads = count($data[$fn]);
+                if ($countForms !== $countLoads) {
+                    $form = [];
+
+                    for ($i = 1; $i <= $countLoads; $i++) {
+                        $form[] = clone $first;
+                    }
+                    $this->$name = $form;
+                }
                 $success = FormModel::loadMultiple($form, $data, $formName === null ? null : $name) && $success;
             } else {
                 $success = $form->load($data, $formName !== '' ? null : $name) && $success;

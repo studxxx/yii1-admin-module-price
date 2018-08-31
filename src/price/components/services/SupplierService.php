@@ -21,59 +21,73 @@ class SupplierService
      */
     public function create(PriceSupplierForm $form): PriceSupplier
     {
-        $brand = $this->brands->get($form->brandId);
-        $category = $this->categories->get($form->categories->main);
+        $supplier = $this->suppliers->create();
+        $currency = $this->currencies->get($form->currency->currency);
 
-        $product = $this->products->create();
+        $supplier->name = $form->name;
+        $supplier->title = $form->title;
+        $supplier->email = $form->email;
+        $supplier->phone = $form->phone;
+        $supplier->description = $form->description;
+        $supplier->note = $form->note;
 
-        $product->brand_id = $brand->id;
-        $product->category_id = $category->id;
-        $product->code = $form->code;
-        $product->name = $form->name;
-        $product->description = $form->description;
-        $product->weight = $form->weight;
-        $product->quantity = $form->quantity->quantity;
-        $this->products->setMeta(
-            $product,
-            $form->meta->title,
-            $form->meta->description,
-            $form->meta->keywords
-        );
+        $supplier->changeCurrency($currency->id);
 
-        $product->setPrice($form->price->new, $form->price->old);
-
-        foreach ($form->categories->others as $otherId) {
-            $category = $this->categories->get($otherId);
-            $product->assignCategory($category->id);
+        foreach ($form->ranges as $range) {
+            $supplier->setRange($range->from, $range->to, $range->value);
         }
 
-        foreach ($form->values as $value) {
-            $product->setValue($value->id, $value->value);
+        foreach ($form->templates as $template) {
+            $supplier->setTemplate($template->coordinate, $template->field_name, $template->validator);
         }
 
-        foreach ($form->photos->files as $file) {
-            $product->addPhoto($file);
-        }
+        // @todo
+        var_dump($supplier->ranges);
+        var_dump($supplier->templates);
+        var_dump($supplier);
+        die;
 
-        foreach ($form->tags->existing as $tagId) {
-            $tag = $this->tags->get($tagId);
-            $product->assignTag($tag->id);
-        }
+//        $this->products->setMeta(
+//            $product,
+//            $form->meta->title,
+//            $form->meta->description,
+//            $form->meta->keywords
+//        );
 
-        $this->transaction->wrap(function () use ($product, $form) {
-            foreach ($form->tags->newNames as $tagName) {
-                if (!$tag = $this->tags->findByName($tagName)) {
-                    $tag = $this->tags->create();
-                    $tag->name = $tagName;
-                    $tag->slug = $tagName;
-                    $this->tags->save($tag);
-                }
-                $product->assignTag($tag->id);
-            }
-            $this->products->save($product);
-        });
+//        $product->setPrice($form->price->new, $form->price->old);
 
-        return $product;
+//        foreach ($form->categories->others as $otherId) {
+//            $category = $this->categories->get($otherId);
+//            $product->assignCategory($category->id);
+//        }
+
+//        foreach ($form->values as $value) {
+//            $product->setValue($value->id, $value->value);
+//        }
+
+//        foreach ($form->photos->files as $file) {
+//            $product->addPhoto($file);
+//        }
+
+//        foreach ($form->tags->existing as $tagId) {
+//            $tag = $this->tags->get($tagId);
+//            $product->assignTag($tag->id);
+//        }
+//
+//        $this->transaction->wrap(function () use ($product, $form) {
+//            foreach ($form->tags->newNames as $tagName) {
+//                if (!$tag = $this->tags->findByName($tagName)) {
+//                    $tag = $this->tags->create();
+//                    $tag->name = $tagName;
+//                    $tag->slug = $tagName;
+//                    $this->tags->save($tag);
+//                }
+//                $product->assignTag($tag->id);
+//            }
+//            $this->products->save($product);
+//        });
+
+        return $supplier;
     }
 
     /**
