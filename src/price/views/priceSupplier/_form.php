@@ -15,6 +15,8 @@ echo $form->errorSummary($model);
 
 echo $form->textFieldRow($model, 'name', ['class' => 'span12', 'maxlength' => 255,]);
 
+echo $form->textFieldRow($model, 'title', ['class' => 'span12', 'maxlength' => 255,]);
+
 echo $form->textFieldRow($model, 'email', ['class' => 'span12', 'maxlength' => 255,]);
 
 echo $form->dropDownListRow($model->currency, 'currency', $model->currency->list(), [

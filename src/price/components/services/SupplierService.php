@@ -6,18 +6,23 @@ class SupplierService
     private $suppliers;
     /** @var PriceCurrencyRepository */
     private $currencies;
+    /** @var TransactionManager */
+    private $transaction;
 
     public function __construct(
         PriceSupplierRepository $suppliers,
-        PriceCurrencyRepository $currencies
+        PriceCurrencyRepository $currencies,
+        TransactionManager $transaction
     ) {
         $this->currencies = $currencies;
         $this->suppliers = $suppliers;
+        $this->transaction = $transaction;
     }
 
     /**
      * @param PriceSupplierForm $form
      * @return PriceSupplier
+     * @throws Exception
      */
     public function create(PriceSupplierForm $form): PriceSupplier
     {
@@ -37,22 +42,9 @@ class SupplierService
             $supplier->setRange($range->from, $range->to, $range->value);
         }
 
-        foreach ($form->templates as $template) {
-            $supplier->setTemplate($template->coordinate, $template->field_name, $template->validator);
-        }
-
-        // @todo
-        var_dump($supplier->ranges);
-        var_dump($supplier->templates);
-        var_dump($supplier);
-        die;
-
-//        $this->products->setMeta(
-//            $product,
-//            $form->meta->title,
-//            $form->meta->description,
-//            $form->meta->keywords
-//        );
+//        foreach ($form->templates as $template) {
+//            $supplier->setTemplate($template->coordinate, $template->field_name, $template->validator);
+//        }
 
 //        $product->setPrice($form->price->new, $form->price->old);
 
@@ -73,19 +65,20 @@ class SupplierService
 //            $tag = $this->tags->get($tagId);
 //            $product->assignTag($tag->id);
 //        }
-//
-//        $this->transaction->wrap(function () use ($product, $form) {
-//            foreach ($form->tags->newNames as $tagName) {
-//                if (!$tag = $this->tags->findByName($tagName)) {
-//                    $tag = $this->tags->create();
-//                    $tag->name = $tagName;
-//                    $tag->slug = $tagName;
-//                    $this->tags->save($tag);
+
+        $this->transaction->wrap(function () use ($supplier) {
+            foreach ($supplier->ranges as $range) {
+                if ($range->isNewRecord) {
+                    $range->save();
+                }
+            }
+//            foreach ($supplier->templates as $template) {
+//                if ($template->isNewRecord) {
+//                    $template->save();
 //                }
-//                $product->assignTag($tag->id);
 //            }
-//            $this->products->save($product);
-//        });
+            $this->suppliers->save($supplier);
+        });
 
         return $supplier;
     }
@@ -93,6 +86,7 @@ class SupplierService
     /**
      * @param $id
      * @param PriceSupplierForm $form
+     * @throws Exception
      */
     public function edit($id, PriceSupplierForm $form)
     {
@@ -109,17 +103,9 @@ class SupplierService
 
         $supplier->changeCurrency($currency->id);
 
-        $supplier->revokeRanges();
-
         foreach ($form->ranges as $range) {
-            $supplier->setRange($range->id, $range->from, $range->to, $range->value);
+            $supplier->setRange($range->from, $range->to, $range->value, $range->id);
         }
-
-        foreach ($form->templates as $template) {
-
-        }
-
-        var_dump($form);die;
 
 //        $brand = $this->brands->get($form->brandId);
 //        $category = $this->categories->get($form->categories->main);
@@ -130,8 +116,8 @@ class SupplierService
 //            $form->meta->description,
 //            $form->meta->keywords
 //        );
-//
-//        $this->transaction->wrap(function () use ($product, $form) {
+
+        $this->transaction->wrap(function () use ($supplier) {
 //            $product->revokeCategories();
 //            $product->revokeTags();
 //            $this->products->save($product);
@@ -149,19 +135,13 @@ class SupplierService
 //                $tag = $this->tags->get($tagId);
 //                $product->assignTag($tag->id);
 //            }
-//
-//            foreach ($form->tags->newNames as $tagName) {
-//                if (!$tag = $this->tags->findByName($tagName)) {
-//                    $tag = $this->tags->create();
-//                    $tag->name = $tagName;
-//                    $tag->slug = $tagName;
-//                    $this->tags->save($tag);
-//                }
-//                $product->assignTag($tag->id);
-//            }
-//
-//            $this->products->save($product);
-//        });
+
+            foreach ($supplier->ranges as $range) {
+                $range->save();
+            }
+
+            $this->suppliers->save($supplier);
+        });
     }
 
 //    /**

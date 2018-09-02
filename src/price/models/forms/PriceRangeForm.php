@@ -2,12 +2,15 @@
 
 /**
  * Class PriceRangeForm
- * @property $from
- * @property $to
- * @property $value
+ * @property int $id
+ * @property int $from
+ * @property int $to
+ * @property int $value
+ * @property bool $isNewRecord
  */
 class PriceRangeForm extends FormModel
 {
+    public $id;
     public $from;
     public $to;
     public $value;
@@ -15,16 +18,23 @@ class PriceRangeForm extends FormModel
     public function rules()
     {
         return [
-            ['from, to, value', 'safe']
+            ['id, from', 'required'],
+            ['id, from, to, value', 'numerical', 'integerOnly' => true],
         ];
     }
 
     public function attributeLabels()
     {
         return [
+            'id' => '#',
             'from' => 'From',
             'to' => 'To',
             'value' => 'Value',
         ];
+    }
+
+    public function getIsNewRecord()
+    {
+        return $this->id === null;
     }
 }

@@ -41,7 +41,10 @@ class PriceSupplier extends CActiveRecord
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
                 'setUpdateOnCreate' => true,
-            ]
+            ],
+            'RelationBehavior' => [
+                'class' => 'vendor.yiiext.activerecord-relation-behavior.EActiveRecordRelationBehavior',
+            ],
         ];
     }
 
@@ -83,15 +86,16 @@ class PriceSupplier extends CActiveRecord
         $this->currency_id = $currencyId;
     }
 
-    public function setRange($from, $to, $value)
+    public function setRange($from, $to, $value, $id = null)
     {
         $ranges = $this->ranges;
-
-        foreach ($ranges as $range) {
-            if ($range->isForRange($from, $to)) {
-                $range->change($value);
-                $this->ranges = $ranges;
-                return;
+        if ($id) {
+            foreach ($ranges as $range) {
+                if ($range->isForRange($id)) {
+                    $range->change($value);
+                    $this->ranges = $ranges;
+                    return;
+                }
             }
         }
 

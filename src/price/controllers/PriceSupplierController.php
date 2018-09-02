@@ -179,6 +179,7 @@ class PriceSupplierController extends BasicPriceController
     {
         $suppliers = new PriceSupplierRepository();
         $currencies = new PriceCurrencyRepository();
-        return new SupplierService($suppliers, $currencies);
+        $transaction = new TransactionManager();
+        return new SupplierService($suppliers, $currencies, $transaction);
     }
 }

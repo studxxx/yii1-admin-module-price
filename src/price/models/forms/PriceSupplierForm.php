@@ -38,6 +38,7 @@ class PriceSupplierForm extends CompositeForm
                 ? [new PriceRangeForm()]
                 : array_map(function (PriceRange $range) {
                     $form = new PriceRangeForm();
+                    $form->id = $range->id;
                     $form->from = $range->from;
                     $form->to = $range->to;
                     $form->value = $range->value;
@@ -65,6 +66,7 @@ class PriceSupplierForm extends CompositeForm
     public function rules()
     {
         return [
+            ['name, phone', 'required'],
             ['name, title, phone', 'length', 'max' => 255],
             ['email', 'email'],
             ['description, note', 'safe'],
