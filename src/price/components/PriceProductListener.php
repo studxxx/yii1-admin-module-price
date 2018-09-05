@@ -1,7 +1,12 @@
 <?php
+Yii::import('admin-module-tecdoc.components.TecdocLookupListener');
 
 class PriceProductListener
 {
+    /**
+     * @param CEvent $event
+     * @throws CException
+     */
     public static function documentRowRead(CEvent $event)
     {
         $row = $event->sender;
@@ -12,7 +17,7 @@ class PriceProductListener
         $supplier = PriceSupplier::model()->findByPk($row['supplier_id']);
         $product->setFinalPrice($supplier->currency, $supplier->ranges);
 
-//        $product->attachEventHandler('onPriceProductSaved', ['TecdocLookupListener', 'lookup']);
+        $product->attachEventHandler('onPriceProductSaved', ['TecdocLookupListener', 'priceProductPersisted']);
 //        $product->attachEventHandler('onPriceProductSaved', ['ProductListener', 'saveVariant']);
 
         if (!$product->save()) {
@@ -23,6 +28,9 @@ class PriceProductListener
             $message .= 'with row data:' . PHP_EOL;
             $message .= CVarDumper::dumpAsString($row);
             Yii::log($message, CLogger::LEVEL_ERROR, 'application');
+        }
+        if ($product->hasEventHandler('onPriceProductSaved')) {
+            $product->onPriceProductSaved(new CEvent($product));
         }
     }
 }

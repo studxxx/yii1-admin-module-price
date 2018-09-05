@@ -143,6 +143,21 @@ class PriceProduct extends CActiveRecord
         return $this->exist === self::EXIST_UNDER_ORDER;
     }
 
+    public function isTypeNotFound()
+    {
+        return $this->type === self::TYPE_NOT_FOUNT;
+    }
+
+    public function isTypeUndefined()
+    {
+        return $this->type === self::TYPE_UNDEFINED;
+    }
+
+    public function isTypeTecdoc()
+    {
+        return $this->type === self::TYPE_TECDOC;
+    }
+
     /**
      * @param PriceCurrency $currency
      * @param PriceRange[] $ranges
@@ -159,5 +174,14 @@ class PriceProduct extends CActiveRecord
                 break;
             }
         }
+    }
+
+    /**
+     * @param CEvent $event
+     * @throws CException
+     */
+    public function onPriceProductSaved(CEvent $event)
+    {
+        $this->raiseEvent('onPriceProductSaved', $event);
     }
 }
