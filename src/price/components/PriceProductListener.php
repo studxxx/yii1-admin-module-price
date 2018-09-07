@@ -1,5 +1,6 @@
 <?php
 Yii::import('admin-module-tecdoc.components.TecdocLookupListener');
+Yii::import('admin-module-product.components.ProductListener');
 
 class PriceProductListener
 {
@@ -18,7 +19,7 @@ class PriceProductListener
         $product->setFinalPrice($supplier->currency, $supplier->ranges);
 
         $product->attachEventHandler('onPriceProductSaved', ['TecdocLookupListener', 'priceProductPersisted']);
-//        $product->attachEventHandler('onPriceProductSaved', ['ProductListener', 'saveVariant']);
+        $product->attachEventHandler('onPriceProductSaved', ['ProductListener', 'priceProductPersisted']);
 
         if (!$product->save()) {
             $message = $product->isNewRecord
