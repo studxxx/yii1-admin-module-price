@@ -33,7 +33,7 @@ class PriceProductController extends BasicPriceController
     }
 
     /**
-     * Manages all models.
+     * @throws CException
      */
     public function actionIndex()
     {
@@ -45,7 +45,7 @@ class PriceProductController extends BasicPriceController
         }
 
         if (Yii::app()->request->isAjaxRequest) {
-            $this->renderPartial('_list', [
+            $this->renderPartial('_grid', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $searchModel->search()
             ]);

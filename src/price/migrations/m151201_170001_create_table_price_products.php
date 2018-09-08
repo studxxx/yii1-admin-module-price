@@ -23,7 +23,7 @@ class m151201_170001_create_table_price_products extends CDbMigration
             'final_price' => 'string default null',
             'exist' => 'string default null',
             'count' => 'string default null',
-            'type' => 'string default null',
+            'type' => 'tinyint(1) default 0',
             'delivery' => 'string default null',
             'note' => 'string default null',
             'constructions' => 'string default null',

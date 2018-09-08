@@ -19,6 +19,7 @@ return [
     'MODEL_UPDATED_AT' => 'Оновлено',
     'MODEL_STATUS_PRICE' => 'Статус',
     'MODEL_PRICE_FILE' => 'Файл прайсу',
+    'MODEL_EXIST' => 'Наявність',
 
     'MODEL_PRICE' => 'Ціна',
     'MODEL_SUPPLIER_PRICE' => 'Ціна поставщика',
@@ -145,4 +146,14 @@ return [
     'T_RANGE_PRICE' => 'Націнка магазину',
 
     'T_CREATE_SUPPLIER' => 'Додати поставщика',
+
+    'T_NOT_FOUND' => 'Не шукали',
+    'T_TYPE_UNDEFINED' => 'Не визначили',
+    'T_TYPE_TECDOC' => 'Tecdoc',
+    'LABEL_SHOW' => '<i class="icon-eye-open"></i>',
+    'LABEL_HIDE' => '<i class="icon-eye-close"></i>',
+    'LABEL_EXIST' => 'В наявності',
+    'LABEL_NOT_EXIST' => 'Не в наявності',
+    'LABEL_BY_ORDER' => 'Під замовлення',
+
 ];

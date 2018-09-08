@@ -74,10 +74,7 @@ class PriceProductHelper
     {
         $class = 'success';
 
-        $content = [
-            PriceProduct::HIDE => PriceModule::t('LABEL_HIDE'),
-            PriceProduct::SHOW => PriceModule::t('LABEL_SHOW'),
-        ];
+        $content = self::visible();
 
         if ($product->isHide()) {
             $class = 'danger';
