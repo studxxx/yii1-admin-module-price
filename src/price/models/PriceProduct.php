@@ -65,9 +65,9 @@ class PriceProduct extends CActiveRecord
     public function rules()
     {
         return [
-            ['supplier_id', 'required'],
-            ['id, exist, supplier_id, created, updated, visible, type, status, delivery, state, tecdoc_article_id, tecdoc_supplier_id', 'numerical', 'integerOnly' => true],
-            ['search, sku, brand, name, price, count, marker, constructions, cross_numbers, marker, tecdoc_article_nr, tecdoc_supplier_brand', 'length', 'max' => 255],
+            ['token, supplier_id', 'required'],
+            ['id, exist, supplier_id, created_at, updated_at, visible, type, status, delivery, state, tecdoc_article_id, tecdoc_supplier_id', 'numerical', 'integerOnly' => true],
+            ['token, search, sku, brand, name, price, count, constructions, cross_numbers, tecdoc_article_nr, tecdoc_supplier_brand', 'length', 'max' => 255],
             ['image, note', 'safe'],
             ['search, sku, name, constructions, cross_numbers', 'filter', 'filter' => 'trim'],
             ['id, search, sku, brand, name, price, exist, sid, visible, constructions, cross_numbers', 'safe', 'on' => 'search'],
@@ -84,25 +84,25 @@ class PriceProduct extends CActiveRecord
     public function attributeLabels()
     {
         return [
-            'search' => PriceModule::t('Search'),
-            'brand' => PriceModule::t('Brand'),
-            'id' => PriceModule::t('ID'),
-            'sku' => PriceModule::t('SKU'),
-            'name' => PriceModule::t('Name'),
+            'id' => PriceModule::t('MODEL_ID'),
+            'search' => PriceModule::t('MODEL_SEARCH'),
+            'brand' => PriceModule::t('MODEL_BRAND'),
+            'sku' => PriceModule::t('MODEL_SKU'),
+            'name' => PriceModule::t('MODEL_NAME'),
             'price' => PriceModule::t('MODEL_PRICE'),
-            'exist' => PriceModule::t('main', 'Exist'),
+            'exist' => PriceModule::t('MODEL_EXIST'),
             'count' => PriceModule::t('MODEL_COUNT'),
-            'sid' => PriceModule::t('MODEL_SUPPLIERS_NAME'),
+            'supplier_id' => PriceModule::t('MODEL_SUPPLIERS_NAME'),
             'visible' => PriceModule::t('MODEL_VISIBLE'),
-            'status' => PriceModule::t('main', 'T_STATUS'),
-            'created' => PriceModule::t('MODEL_CREATED'),
-            'updated' => PriceModule::t('MODEL_UPDATED'),
-            'constructions' => PriceModule::t('T_STATUS'),
-            'cross_numbers' => PriceModule::t('T_STATUS'),
-            'tecdoc_article_id' => PriceModule::t('T_STATUS'),
-            'tecdoc_supplier_id' => PriceModule::t('T_STATUS'),
-            'tecdoc_article_nr' => PriceModule::t('T_STATUS'),
-            'tecdoc_supplier_brand' => PriceModule::t('T_STATUS'),
+            'status' => PriceModule::t('MODEL_STATUS'),
+            'constructions' => PriceModule::t('MODEL_CONSTRUCTIONS'),
+            'cross_numbers' => PriceModule::t('MODEL_CROSS_NUMBERS'),
+            'tecdoc_article_id' => PriceModule::t('MODEL_TECDOC_ARTICLE_ID'),
+            'tecdoc_supplier_id' => PriceModule::t('MODEL_TECDOC_SUPPLIER_ID'),
+            'tecdoc_article_nr' => PriceModule::t('MODEL_TECDOC_ARTICLE'),
+            'tecdoc_supplier_brand' => PriceModule::t('MODEL_TECDOC_BRAND'),
+            'created_at' => PriceModule::t('MODEL_CREATED_AT'),
+            'updated_at' => PriceModule::t('MODEL_UPDATED_AT'),
         ];
     }
 
@@ -141,5 +141,47 @@ class PriceProduct extends CActiveRecord
     public function isExistUnderOrder()
     {
         return $this->exist === self::EXIST_UNDER_ORDER;
+    }
+
+    public function isTypeNotFound()
+    {
+        return $this->type === self::TYPE_NOT_FOUNT;
+    }
+
+    public function isTypeUndefined()
+    {
+        return $this->type === self::TYPE_UNDEFINED;
+    }
+
+    public function isTypeTecdoc()
+    {
+        return $this->type === self::TYPE_TECDOC;
+    }
+
+    /**
+     * @param PriceCurrency $currency
+     * @param PriceRange[] $ranges
+     */
+    public function setFinalPrice(PriceCurrency $currency, array $ranges)
+    {
+        $this->final_price = $this->price * $currency->value;
+
+        foreach ($ranges as $range) {
+            if ($range->from >= $this->final_price && $range->to <= $this->final_price
+                || ($range->from >= $this->final_price && empty($range->to))
+            ) {
+                $this->final_price = round($this->final_price * ($range->value / 100 + 1));
+                break;
+            }
+        }
+    }
+
+    /**
+     * @param CEvent $event
+     * @throws CException
+     */
+    public function onPriceProductSaved(CEvent $event)
+    {
+        $this->raiseEvent('onPriceProductSaved', $event);
     }
 }

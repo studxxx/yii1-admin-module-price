@@ -41,7 +41,10 @@ class PriceSupplier extends CActiveRecord
                 'createAttribute' => 'created_at',
                 'updateAttribute' => 'updated_at',
                 'setUpdateOnCreate' => true,
-            ]
+            ],
+            'RelationBehavior' => [
+                'class' => 'vendor.yiiext.activerecord-relation-behavior.EActiveRecordRelationBehavior',
+            ],
         ];
     }
 
@@ -76,5 +79,49 @@ class PriceSupplier extends CActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function changeCurrency(int $currencyId)
+    {
+        $this->currency_id = $currencyId;
+    }
+
+    public function setRange($from, $to, $value, $id = null)
+    {
+        $ranges = $this->ranges;
+        if ($id) {
+            foreach ($ranges as $range) {
+                if ($range->isForRange($id)) {
+                    $range->change($value);
+                    $this->ranges = $ranges;
+                    return;
+                }
+            }
+        }
+
+        if ($value === null) {
+            return;
+        }
+
+        $newRange = new PriceRange();
+        $newRange->from = $from;
+        $newRange->to = $to;
+        $newRange->value = $value;
+
+        $ranges[] = $newRange;
+        $this->ranges = $ranges;
+    }
+
+    public function setTemplate($coordinate, $fieldName, $validator)
+    {
+        $templates = $this->templates;
+
+        $newTemplate = new PriceTemplate();
+        $newTemplate->coordinate = $coordinate;
+        $newTemplate->field_name = $fieldName;
+        $newTemplate->validator = $validator;
+
+        $templates[] = $newTemplate;
+        $this->templates = $templates;
     }
 }

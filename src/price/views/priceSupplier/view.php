@@ -4,7 +4,7 @@
 
 $this->pageTitle = $model->name;
 $this->breadcrumbs = [
-    PriceModule::t('MENU_PRICES') => ['price/index'],
+    PriceModule::t('T_MENU_PRICES') => ['price/index'],
     PriceModule::t('MENU_SUPPLIERS') => ['index'],
     $this->pageTitle,
 ];
@@ -45,15 +45,18 @@ $this->widget('bootstrap.widgets.TbDetailView', [
         'name',
         'email',
         'phone',
-        'currency',
+        'currency_id' => [
+            'name' => 'currency_id',
+            'value' => $model->currency->name,
+        ],
         'description',
         'note',
-        'created' => [
-            'name' => 'created',
+        'created_at' => [
+            'name' => 'created_at',
             'value' => DateHelper::datetime($model, 'created_at'),
         ],
-        'updated' => [
-            'name' => 'updated',
+        'updated_at' => [
+            'name' => 'updated_at',
             'value' => DateHelper::datetime($model, 'updated_at'),
         ],
     ],

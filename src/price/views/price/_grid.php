@@ -1,6 +1,6 @@
 <?php
-/* @var $this ImportController */
-/* @var $model Import */
+/* @var $this PriceController */
+/* @var $model Price */
 
 $this->widget('bootstrap.widgets.TbGridView', [
     'id' => 'import-grid',
@@ -10,7 +10,7 @@ $this->widget('bootstrap.widgets.TbGridView', [
         'id',
         'supplier_id' => [
             'name' => 'supplier_id',
-            'value' => '$data->suppliers->name',
+            'value' => '$data->supplier->name',
             'filter' => CHtml::listData(PriceSupplier::model()->findAll(), 'id', 'name'),
         ],
         'status' => [

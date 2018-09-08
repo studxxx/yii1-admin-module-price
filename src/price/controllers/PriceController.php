@@ -78,10 +78,18 @@ class PriceController extends BasicPriceController
                 $model->scenario = 'default';
                 $model->price_file = $model->price_file->getName();
 
-                $this->gearman->send(
+                $jobHanle = $this->gearman->send(
                     JSON::encode([
                         'data' => $model,
-                        'performer' => 'vendor.studxxx.yii1-admin-module-price.src.price.behaviors.ImportPriceBehavior'
+                        'performer' => 'vendor.studxxx.yii1-admin-module-price.src.price.behaviors.ImportPriceBehavior',
+                        'events' => [
+                            'onDocumentRowRead' => [
+                                [
+                                    'vendor.studxxx.yii1-admin-module-price.src.price.components.PriceProductListener',
+                                    'documentRowRead'
+                                ],
+                            ]
+                        ],
                     ]),
                     null,
                     ClientService::PRIORITY_LOW

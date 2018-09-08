@@ -29,30 +29,24 @@ $this->widget('bootstrap.widgets.TbGridView', [
             'filter' => PriceProductHelper::exists(),
             'type' => 'raw',
         ],
-//        'count' => array(
-//            'name'  => 'count',
-//            'value' => '$data->count',
-////            'filter'=> false,
-////            'type'=>'html'
-//        ),
         'visible' => [
             'name' => 'visible',
             'value' => 'PriceProductHelper::getVisible($data)',
             'filter' => PriceProductHelper::visible(),
             'type' => 'raw',
         ],
-        'type' => [
-            'name' => 'type',
-            'value' => 'PriceProductHelper::type($data)',
-            'filter' => PriceProductHelper::types(),
-            'type' => 'raw',
-        ],
+//        'type' => [
+//            'name' => 'type',
+//            'value' => 'PriceProductHelper::getType($data)',
+//            'filter' => PriceProductHelper::types(),
+//            'type' => 'raw',
+//        ],
         'updated_at' => [
             'name' => 'updated_at',
             'value' => 'DateHelper::datetime($data, "updated_at")',
         ],
         [
-            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonGroupColumn',
         ],
     ],
 ]);

@@ -12,7 +12,7 @@ class PriceCurrencyForm extends FormModel
         parent::__construct($scenario);
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['currency', 'required'],
@@ -20,7 +20,7 @@ class PriceCurrencyForm extends FormModel
         ];
     }
 
-    public function currenciesList(): array
+    public function list(): array
     {
         return CHtml::listData(PriceCurrency::model()->findAll(), 'id', 'name');
     }

@@ -4,7 +4,7 @@
 /* @var $currencies array */
 $this->pageTitle = PriceModule::t('MENU_SUPPLIERS');
 $this->breadcrumbs = [
-    PriceModule::t('MENU_PRICES') => ['price/index'],
+    PriceModule::t('T_MENU_PRICES') => ['price/index'],
     $this->pageTitle,
 ];
 
