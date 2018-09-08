@@ -12,7 +12,6 @@ class m151201_170001_create_table_price_products extends CDbMigration
         $this->createTable(self::TABLE_SCHEMA, [
             'id' => 'pk',
             'variant_id' => 'int(11) not null',
-            'currency_id' => 'int(11) not null',
             'supplier_id' => 'int(11) not null',
             'sku' => 'string default null',
             'search' => 'string default null',
