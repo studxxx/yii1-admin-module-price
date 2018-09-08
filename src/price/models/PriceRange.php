@@ -55,4 +55,14 @@ class PriceRange extends CActiveRecord
             ]
         ];
     }
+
+    public function isForRange(int $id)
+    {
+        return intval($this->id) === $id;
+    }
+
+    public function change($value)
+    {
+        $this->value = $value;
+    }
 }

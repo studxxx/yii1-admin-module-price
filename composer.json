@@ -17,6 +17,7 @@
     "phpoffice/phpexcel": "^1.8",
     "studxxx/yii-components": "^0.0.1",
     "studxxx/yii1-gearman": "^0.0.1",
+    "yiiext/activerecord-relation-behavior": "dev-master",
     "yiisoft/yii": "^1.1"
   },
   "repositories": [
