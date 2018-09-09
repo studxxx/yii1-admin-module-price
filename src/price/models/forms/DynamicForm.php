@@ -95,7 +95,6 @@ class DynamicForm extends FormModel
      * @param $validator
      * @param array $options
      * @return $this
-     * @throws CException
      */
     public function addRule($attributes, $validator, $options = [])
     {

@@ -167,10 +167,11 @@ class PriceProduct extends CActiveRecord
         $this->final_price = $this->price * $currency->value;
 
         foreach ($ranges as $range) {
-            if ($range->from >= $this->final_price && $range->to <= $this->final_price
-                || ($range->from >= $this->final_price && empty($range->to))
+            if ($range->from <= $this->final_price && $range->to >= $this->final_price
+                || ($range->from <= $this->final_price && is_null($range->to))
             ) {
-                $this->final_price = round($this->final_price * ($range->value / 100 + 1));
+                $finalPrice = $this->final_price * ($range->value / 100 + 1);
+                $this->final_price = new CDbExpression ("ROUND($finalPrice, 0)");
                 break;
             }
         }

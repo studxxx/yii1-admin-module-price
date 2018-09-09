@@ -92,10 +92,12 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
                 throw new CException('Row data not loaded');
             }
 
-            $form->defineAttribute('token', md5(implode('_', [$item['brand'], $item['sku'], $this->supplier->id])));
+            $form->defineAttribute('token', implode('_', [$item['brand'], $item['sku'], $this->supplier->id]));
+            $form->addRule('token', 'filter', ['filter' => 'md5']);
             $form->addRule('token', 'length', ['max' => 32]);
 
-            $form->defineAttribute('search', preg_replace("/[^a-zA-Z0-9]/", '', $item['sku']));
+            $form->defineAttribute('search', $item['sku']);
+            $form->addRule('search', 'filter', ['filter' => ['DocumentForm', 'filterOnlySymbol']]);
             $form->addRule('search', 'length', ['max' => 32]);
 
             if (!empty($item['delivery'])) {
