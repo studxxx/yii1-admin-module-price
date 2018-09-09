@@ -18,7 +18,7 @@ class PriceRangeForm extends FormModel
     public function rules()
     {
         return [
-            ['id, from', 'required'],
+            ['from', 'required'],
             ['id, from, to, value', 'numerical', 'integerOnly' => true],
         ];
     }
