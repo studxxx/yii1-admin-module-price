@@ -24,7 +24,7 @@ class SupplierService
      * @return PriceSupplier
      * @throws Exception
      */
-    public function create(PriceSupplierForm $form): PriceSupplier
+    public function create(PriceSupplierForm $form)
     {
         $supplier = $this->suppliers->create();
         $currency = $this->currencies->get($form->currency->currency);
