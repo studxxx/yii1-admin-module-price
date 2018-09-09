@@ -3,7 +3,6 @@
 /**
  * Class PriceSupplierForm
  *
- * @property integer $id
  * @property string $name
  * @property string $title
  * @property string $email
@@ -16,7 +15,6 @@
  */
 class PriceSupplierForm extends CompositeForm
 {
-    public $id;
     public $name;
     public $title;
     public $email;
