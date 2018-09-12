@@ -6,7 +6,7 @@ class PriceProductController extends BasicPriceController
     {
         return [
             'accessControl',
-            'postOnly + delete, toggle',
+            'postOnly + delete, toggle, deleteAll',
         ];
     }
 
@@ -21,7 +21,7 @@ class PriceProductController extends BasicPriceController
             [
                 'allow',
                 'actions' => [
-                    'index', 'view', 'create', 'update', 'delete', 'toggle',
+                    'index', 'view', 'create', 'update', 'delete', 'toggle', 'deleteAll',
                 ],
                 'roles' => [Users::ROLE_MANAGER],
             ],
@@ -153,6 +153,11 @@ class PriceProductController extends BasicPriceController
         if (!Yii::app()->request->getQuery('ajax')) {
             $this->redirect(Yii::app()->request->getPost('returnUrl') ? $_POST['returnUrl'] : ['index']);
         }
+    }
+
+    public function actionDeleteAll()
+    {
+        PriceProduct::model()->deleteAll();
     }
 
     /**

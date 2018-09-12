@@ -74,6 +74,20 @@ $this->beginWidget('application.components.widgets.WPortlet', [
 <?php $this->renderPartial('_grid', [
     'searchModel' => $searchModel,
     'dataProvider' => $dataProvider
-]);
+]); ?>
 
-$this->endWidget();
+<?= CHtml::ajaxLink(
+    '<i class="icon-trash"></i> Remove ALL</a>',
+    ['/price/priceProduct/deleteAll', 'ajax' => 'range-delete-all'],
+    [
+        'beforeSend' => 'js:function () { if(confirm("Are you sure you want to delete?")) { return true; } }',
+        'success' => 'js:function (data) { $.fn.yiiGridView.update("price-products-grid"); }',
+        'type' => 'post',
+    ],
+    [
+        'class' => 'btn btn-large btn-block btn-danger',
+        'title' => 'Remove All products',
+        'href' => 'javascript:void(0);'
+    ]
+); ?>
+<?php $this->endWidget();
