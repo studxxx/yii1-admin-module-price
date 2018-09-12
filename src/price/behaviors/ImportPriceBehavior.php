@@ -9,9 +9,7 @@ Yii::import('vendor.studxxx.yii1-admin-module-price.src.price.components.reposit
  * Class ImportPriceBehavior
  * @property PriceRepository $prices
  *
- *
  * @property DocumentHandler $documentHandler
- * @property TemplateForm $template
  * @property Price $price
  * @property string $path
  * @property string $pathExport
@@ -19,7 +17,7 @@ Yii::import('vendor.studxxx.yii1-admin-module-price.src.price.components.reposit
  * @property PriceSupplier $supplier
  * @property string $priceFile
  * @property array $documentMap
- * @property array $delivery
+ * @property CLogger $logger
  */
 class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
 {
@@ -78,6 +76,7 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
         $data->readOnly = true;
 
         foreach ($data as $item) {
+            set_time_limit(1800);
             $form = new DocumentForm($this->supplier->templates);
             $form->defineAttribute('supplier_id', $this->supplier->id);
             $form->addRule('supplier_id', 'numerical', ['integerOnly' => true]);
@@ -108,6 +107,14 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
 
                 $row = $form->attributes;
                 $this->items[] = $row;
+                $output = implode(', ', array_map(function ($v, $k) {
+                    return is_array($v)
+                        ? "{$k}[]=" . implode("&{$k}[]=", $v)
+                        : "$k=$v";
+                }, $row, array_keys($row)));
+
+                $this->logger->log($output);
+
                 if ($this->hasEventHandler('onDocumentRowRead')) {
                     $this->onDocumentRowRead(new CEvent($row));
                 }
@@ -230,69 +237,6 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
     }
 
     /**
-     * Данные шаблона прайса
-     * @return TemplateForm
-     * @deprecated
-     */
-    public function getTemplate()
-    {
-        return $this->template;
-    }
-
-    /**
-     * @param $template
-     * @deprecated
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-    }
-
-    /**
-     * Завантажити шаблон документа
-     * @param $id
-     * @return TemplateForm
-     * @throws CDbException
-     * @deprecated
-     */
-    public function loadTemplate($id)
-    {
-        $model = Suppliers::model()->findByPk($id);
-
-        if ($model === null) {
-            throw new CDbException('No data supplier', 404);
-        }
-        $template = new TemplateForm();
-        $template->attributes = CJSON::decode($model->template);
-
-        return $template;
-    }
-
-    /**
-     * @param string $sku
-     * @deprecated
-     */
-    public function setSku($sku)
-    {
-        $this->sku = $this->checkField($sku)
-            ? call_user_func([$this, 'clearChars'], $sku)
-            : '';
-    }
-
-    /**
-     * @param $text
-     * @return string
-     * @deprecated
-     */
-    private function clearChars($text)
-    {
-        $text = trim($text);
-        $text = trim($text, "'");
-        $text = trim($text, "->");
-        return trim($text);
-    }
-
-    /**
      * @return string
      */
     public function getPrice()
@@ -309,17 +253,6 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
     }
 
     /**
-     * @param $price
-     * @return float|string
-     * @deprecated
-     */
-    public function priceConverter($price)
-    {
-        $price = call_user_func([$this, 'clearChars'], $price);
-        return Helpers::stringToFloat($price);
-    }
-
-    /**
      * @param int $supplier
      * @deprecated
      */
@@ -328,25 +261,13 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
         $this->supplier = $supplier;
     }
 
-    /**
-     * @return array
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * @param array $items
-     * @deprecated
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
-    }
-
     protected function getPrices()
     {
         return new PriceRepository();
+    }
+
+    public function getLogger()
+    {
+        return Yii::getLogger();
     }
 }
