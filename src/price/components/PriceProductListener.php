@@ -18,8 +18,8 @@ class PriceProductListener
         $supplier = PriceSupplier::model()->findByPk($row['supplier_id']);
         $product->setFinalPrice($supplier->currency, $supplier->ranges);
 
-        $product->attachEventHandler('onPriceProductSaved', ['TecdocLookupListener', 'priceProductPersisted']);
-        $product->attachEventHandler('onPriceProductSaved', ['ProductListener', 'priceProductPersisted']);
+//        $product->attachEventHandler('onPriceProductSaved', ['TecdocLookupListener', 'priceProductPersisted']);
+//        $product->attachEventHandler('onPriceProductSaved', ['ProductListener', 'priceProductPersisted']);
 
         if (!$product->save()) {
             $message = $product->isNewRecord

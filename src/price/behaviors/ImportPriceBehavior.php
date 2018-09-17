@@ -77,27 +77,19 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
 
         foreach ($data as $item) {
             set_time_limit(1800);
-            $form = new DocumentForm($this->supplier->templates);
-            $form->defineAttribute('supplier_id', $this->supplier->id);
-            $form->addRule('supplier_id', 'numerical', ['integerOnly' => true]);
-            $form->defineAttribute('visible', PriceProduct::SHOW);
-            $form->addRule('visible', 'numerical', ['integerOnly' => true]);
-            $form->defineAttribute('exist', PriceProduct::EXIST_AVAILABLE);
-            $form->addRule('exist', 'numerical', ['integerOnly' => true]);
-            $form->defineAttribute('delivery', Yii::app()->config->get('IMPORT.DELIVERY'));
-            $form->addRule('delivery', 'numerical', ['integerOnly' => true]);
+            $form = new DocumentForm($this->supplier->templates, [
+                'supplier_id' => $this->supplier->id,
+                'visible' => PriceProduct::SHOW,
+                'exist' => PriceProduct::EXIST_AVAILABLE,
+                'delivery' => Yii::app()->config->get('IMPORT.DELIVERY'),
+            ]);
 
             if (!$form->load($item, '')) {
                 throw new CException('Row data not loaded');
             }
 
             $form->defineAttribute('token', implode('_', [$item['brand'], $item['sku'], $this->supplier->id]));
-            $form->addRule('token', 'filter', ['filter' => 'md5']);
-            $form->addRule('token', 'length', ['max' => 32]);
-
             $form->defineAttribute('search', $item['sku']);
-            $form->addRule('search', 'filter', ['filter' => ['DocumentForm', 'filterOnlySymbol']]);
-            $form->addRule('search', 'length', ['max' => 32]);
 
             if (!empty($item['delivery'])) {
                 $form->defineAttribute('delivery', Yii::app()->config->get('IMPORT.DELIVERY') + $item['delivery']);
