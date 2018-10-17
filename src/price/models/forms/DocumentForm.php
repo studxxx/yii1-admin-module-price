@@ -7,7 +7,6 @@ class DocumentForm extends DynamicForm
      * @param PriceTemplate[] $templates
      * @param array $attributes
      * @param string $scenario
-     * @throws CException
      */
     public function __construct($templates, array $attributes = [], $scenario = '')
     {
@@ -20,6 +19,16 @@ class DocumentForm extends DynamicForm
         }
 
         parent::__construct($attributes, $scenario);
+    }
+
+    public function rules()
+    {
+        return [
+            ['token', 'filter', 'filter' => 'md5'],
+            ['token, search', 'length', 'max' => 32],
+            ['search', 'filter', 'filter' => ['DocumentForm', 'filterOnlySymbol']],
+            ['supplier_id, visible, exist, delivery', 'numerical', 'integerOnly' => true],
+        ];
     }
 
     public function filterOnlyNumber($value)
