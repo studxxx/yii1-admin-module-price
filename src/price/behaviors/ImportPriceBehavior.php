@@ -70,12 +70,15 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
             throw new CException('No file price for import', 404);
         }
 
-        /** @var $data CList
+        /**
+         * @var $data CList
          */
         $data = $this->documentHandler->documentRead();
+        $this->getDocumentHandler(); // Clear object
         $data->readOnly = true;
 
-        foreach ($data as $item) {
+        foreach ($data as $key => $item) {
+            $this->initDb();
             set_time_limit(1800);
             $form = new DocumentForm($this->supplier->templates, [
                 'supplier_id' => $this->supplier->id,
@@ -110,6 +113,11 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
                 if ($this->hasEventHandler('onDocumentRowRead')) {
                     $this->onDocumentRowRead(new CEvent($row));
                 }
+            }
+            try {
+                $data->removeAt($key);
+            } catch (Exception $e) {
+                Yii::log("Can't remove item from product list.", CLogger::LEVEL_ERROR);
             }
         }
 
@@ -262,4 +270,30 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
     {
         return Yii::getLogger();
     }
+
+    /**
+     * @throws CDbException
+     * @throws CException
+     */
+    protected function initDb()
+    {
+        //run a default command to check for the database connection
+        //if it fails then reconnect to the database
+        Yii::app()->db->setActive(false);
+        try {
+            echo "*******************************************\n";
+            echo "\ntrying to do a dummy command on the database\n";
+            echo "*******************************************\n";
+            Yii::app()->db->createCommand('select 1')->execute();
+        } catch (exception $e) {
+            echo "*******************************************\n";
+            echo "got exception -- " . $e->getMessage() . "\n";
+            echo "*******************************************\n";
+            Yii::app()->db->setActive(false);
+            Yii::app()->db->setActive(true);
+            //try reconnecting again....if this fails, then we know that the mysql server won't work
+            Yii::app()->db->createCommand('select 1')->execute();
+        }
+    }
+
 }
