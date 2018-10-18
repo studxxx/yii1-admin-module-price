@@ -126,7 +126,7 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
         $this->price->status = empty($this->items)
             ? Price::STATUS_ERROR
             : Price::STATUS_IMPORTED;
-        $this->price->csv_file = $this->saveTo('csv');
+        $this->price->csv_file = $this->saveTo('csv', $this->supplier->id);
         $this->prices->save($this->price);
     }
 
@@ -140,23 +140,30 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
     }
 
     /**
+     * Yii::app()->getRequest()->sendFile($filename, $content, "text/csv", false);
+    exit();
      * @param string $type
+     * @param null $supplier_id
      * @return string
      * @throws CException
+     * @throws Exception
      */
-    public function saveTo($type = 'csv')
+    public function saveTo($type = 'csv', $supplier_id = null)
     {
-        return 'save data into csv in developing';
         Yii::import('ext.ECSVExport');
 
-        // Данные для экспорта и его настройки
-        $csv = new ECSVExport($this->items, true, false, '|');
+        $query = "SELECT `brand`, `sku`, `name`, `delivery`, `count`, `price`, `description` FROM price_products";
 
-        $output = $csv->toCSV();
+        if ($supplier_id) {
+            $query .= " WHERE supplier_id = {$supplier_id}";
+        }
 
-        $fileName = $this->supplier->id . '-' . time() . '.csv';
+        $cmd = Yii::app()->db->createCommand($query);
+        $csv = new ECSVExport($cmd, true, false);
+        $fileName = ($supplier_id ? $supplier_id . '-' : '') . time() . '.csv';
+        $fileExport = Helpers::getPublicPath(Yii::app()->config->get('IMPORT.PATH_UPLOAD_IMPORT')) . $fileName;
 
-        if (!file_put_contents($this->pathExport . $fileName, $output)) {
+        if ($csv->toCSV($fileExport, null, null, false)) {
             $this->price->status = Price::STATUS_ERROR;
         }
 

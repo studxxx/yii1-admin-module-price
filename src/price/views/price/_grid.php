@@ -21,25 +21,38 @@ $this->widget('bootstrap.widgets.TbGridView', [
         ],
         [
             'class' => 'bootstrap.widgets.TbButtonGroupColumn',
-            'template' => '{import} {update_price} {import_products}',
+            'template' => '{download} {import} {update_price} {import_products}',
             'buttons' => [
-                'import' => [
+//                'import' => [
+//                    'label' => '<i class="icon-white icon-download-alt"></i>',
+//                    'url' => function ($data) {
+//                        return $this->createUrl('price', [
+//                            'id' => $data->id
+//                        ]);
+//                    },
+//                    'type' => 'success',
+//                    'options' => [
+//                        'title' => PriceModule::t('T_IMPORT_PRICE'),
+//                        'class' => 'btn btn-mini',
+//                        'ajax' => [
+//                            'type' => 'GET',
+//                            'dataType' => 'json',
+//                            'url' => 'js:$(this).attr("href")',
+//                            'success' => 'js:startImport'
+//                        ]
+//                    ],
+//                ],
+                'download' => [
                     'label' => '<i class="icon-white icon-download-alt"></i>',
-                    'url' => function ($data) {
-                        return $this->createUrl('price', [
+                    'url' => function (Price $data) {
+                        return $this->createUrl('download', [
                             'id' => $data->id
                         ]);
                     },
                     'type' => 'success',
                     'options' => [
-                        'title' => PriceModule::t('T_IMPORT_PRICE'),
+                        'title' => PriceModule::t('T_DOWNLOAD_PRICE'),
                         'class' => 'btn btn-mini',
-                        'ajax' => [
-                            'type' => 'GET',
-                            'dataType' => 'json',
-                            'url' => 'js:$(this).attr("href")',
-                            'success' => 'js:startImport'
-                        ]
                     ],
                 ],
             ],
