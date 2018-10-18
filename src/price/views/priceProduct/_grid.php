@@ -19,8 +19,8 @@ $this->widget('bootstrap.widgets.TbGridView', [
         'price' => [
             'name' => 'price',
             'header' => PriceModule::t('MODEL_PRICE'),
-            'value' => function ($data) {
-                return $data->price;
+            'value' => function (PriceProduct $data) {
+                return $data->final_price.  ' грн. ' . "({$data->price})";
             },
         ],
         'exist' => [

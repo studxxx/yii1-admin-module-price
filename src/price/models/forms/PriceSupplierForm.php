@@ -47,6 +47,7 @@ class PriceSupplierForm extends CompositeForm
                 ? [new PriceTemplateForm()]
                 : array_map(function (PriceTemplate $template) {
                     $form = new PriceTemplateForm();
+                    $form->id = $template->id;
                     $form->coordinate = $template->coordinate;
                     $form->field_name = $template->field_name;
                     $form->validator = $template->validator;

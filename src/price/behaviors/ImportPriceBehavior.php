@@ -76,8 +76,9 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
         $data = $this->documentHandler->documentRead();
         $this->getDocumentHandler(); // Clear object
         $data->readOnly = true;
+        $rows = $data->toArray();
 
-        foreach ($data as $key => $item) {
+        foreach ($rows as $key => $item) {
             $this->initDb();
             set_time_limit(1800);
             $form = new DocumentForm($this->supplier->templates, [
@@ -115,7 +116,8 @@ class ImportPriceBehavior extends CBehavior implements WorkerJobInterface
                 }
             }
             try {
-                $data->removeAt($key);
+//                $data->removeAt($key);
+                unset($rows[$key]);
             } catch (Exception $e) {
                 Yii::log("Can't remove item from product list.", CLogger::LEVEL_ERROR);
             }

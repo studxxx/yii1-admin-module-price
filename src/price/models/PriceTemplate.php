@@ -57,4 +57,16 @@ class PriceTemplate extends CActiveRecord
             ]
         ];
     }
+
+    public function isForTemplate(int $id)
+    {
+        return intval($this->id) === $id;
+    }
+
+    public function change($coordinate, $fieldName, $validator)
+    {
+        $this->coordinate = $coordinate;
+        $this->field_name = $fieldName;
+        $this->validator = $validator;
+    }
 }
