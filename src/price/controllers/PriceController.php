@@ -20,7 +20,7 @@ class PriceController extends BasicPriceController
         return [
             [
                 'allow',
-                'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                'actions' => ['index', 'view', 'create', 'update', 'delete', 'download'],
                 'roles' => [Users::ROLE_ADMIN],
             ],
             [
@@ -121,6 +121,23 @@ class PriceController extends BasicPriceController
                     : ['index']
             );
         }
+    }
+
+    /**
+     * @param $id
+     * @throws CHttpException
+     */
+    public function actionDownload($id)
+    {
+        $price = Price::model()->findByPk($id);
+        $fileExport = Helpers::getPublicPath(Yii::app()->config->get('IMPORT.PATH_UPLOAD_IMPORT')) . $price->csv_file;
+        $content = file_get_contents($fileExport);
+
+        if (!$content) {
+            throw new CHttpException(500, 'No price');
+        }
+
+        Yii::app()->getRequest()->sendFile($price->csv_file, $content, "text/csv", false);
     }
 
     /**
