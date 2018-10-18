@@ -92,7 +92,7 @@ class PriceSupplier extends CActiveRecord
         if ($id) {
             foreach ($ranges as $range) {
                 if ($range->isForRange($id)) {
-                    $range->change($value);
+                    $range->change($from, $to, $value);
                     $this->ranges = $ranges;
                     return;
                 }
@@ -112,9 +112,18 @@ class PriceSupplier extends CActiveRecord
         $this->ranges = $ranges;
     }
 
-    public function setTemplate($coordinate, $fieldName, $validator)
+    public function setTemplate($coordinate, $fieldName, $validator, $id = null)
     {
         $templates = $this->templates;
+        if ($id) {
+            foreach ($templates as $template) {
+                if ($template->isForTemplate($id)) {
+                    $template->change($coordinate, $fieldName, $validator);
+                    $this->templates = $templates;
+                    return;
+                }
+            }
+        }
 
         $newTemplate = new PriceTemplate();
         $newTemplate->coordinate = $coordinate;

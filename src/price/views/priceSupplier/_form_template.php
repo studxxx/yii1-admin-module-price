@@ -21,10 +21,36 @@
             'placeholder' => PriceModule::t('validator')
         ]); ?>
         <span class="help-inline">
-            <?= CHtml::link('<i class="icon-remove"></i>', 'javascript:void(0);', [
-                'class' => 'btn btn-link',
-                'onclick' => "$(this).parent().parent().parent().remove();",
-            ]); ?>
+            <?php if ($template->isNewRecord) : ?>
+                <?= CHtml::link('<i class="icon-remove"></i>', 'javascript:void(0);', [
+                    'class' => 'btn btn-link',
+                    'onclick' => "$(this).parent().parent().parent().remove();",
+                ]); ?>
+            <?php else : ?>
+                <?= CHtml::ajaxLink(
+                    '<i class="icon-remove"></i>',
+                    ['/price/priceTemplate/delete', 'id' => $template->id, 'ajax' => 'template-delete'],
+                    [
+//                        'beforeSend' =>
+//'js:function(){
+//    if(confirm("Are you sure you want to delete?")) {
+//        return true;
+//    }
+//}',
+                        'success' =>
+                            'js:function(data){
+                                $("#template-' . $template->id . '").parent().parent().parent().remove();
+                            }',
+                        'type' => 'post',
+                    ],
+                    [
+                        'id' => 'template-' . $template->id,
+                        'class' => 'btn btn-link',
+                        'title' => 'delete',
+                        'href' => 'javascript:void(0);'
+                    ]
+                ); ?>
+            <?php endif; ?>
         </span>
         <?= CHtml::error($template, "[$index]coordinate"); ?>
         <?= CHtml::error($template, "[$index]field_name"); ?>

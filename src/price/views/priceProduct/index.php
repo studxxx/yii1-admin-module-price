@@ -77,7 +77,7 @@ $this->beginWidget('application.components.widgets.WPortlet', [
 ]); ?>
 
 <?= CHtml::ajaxLink(
-    '<i class="icon-trash"></i> Remove ALL</a>',
+    '<i class="icon-trash"></i> Remove ALL',
     ['/price/priceProduct/deleteAll', 'ajax' => 'range-delete-all'],
     [
         'beforeSend' => 'js:function () { if(confirm("Are you sure you want to delete?")) { return true; } }',

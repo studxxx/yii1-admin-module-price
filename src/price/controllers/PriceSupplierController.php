@@ -82,6 +82,7 @@ class PriceSupplierController extends BasicPriceController
      * @throws CHttpException
      * @throws InvalidConfigException
      * @throws ReflectionException
+     * @throws Exception
      */
     public function actionUpdate($id)
     {

@@ -4,6 +4,7 @@
  * @property int $coordinate
  * @property string $field_name
  * @property string $validator
+ * @property bool $isNewRecord
  */
 class PriceTemplateForm extends FormModel
 {
@@ -41,6 +42,11 @@ class PriceTemplateForm extends FormModel
             'field_name' => PriceModule::t('FORM_FIELD_NAME'),
             'validator' => PriceModule::t('FORM_VALIDATOR'),
         ];
+    }
+
+    public function getIsNewRecord()
+    {
+        return $this->id === null;
     }
 
 

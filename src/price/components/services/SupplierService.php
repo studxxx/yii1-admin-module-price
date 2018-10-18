@@ -84,7 +84,7 @@ class SupplierService
         }
 
         foreach ($form->templates as $template) {
-            $supplier->setTemplate($template->coordinate, $template->field_name, $template->validator);
+            $supplier->setTemplate($template->coordinate, $template->field_name, $template->validator, $template->id);
         }
 
         $this->transaction->wrap(function () use ($supplier) {

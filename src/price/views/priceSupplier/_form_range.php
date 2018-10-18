@@ -36,10 +36,7 @@
 //    }
 //}',
                         'success' =>
-'js:function(data){
-    console.log($("range-' . $range->id . '").parent());
-    $("range-' . $range->id . '").parent().parent().parent().remove();
-}',
+                            'js:function(data){$("#range-' . $range->id . '").parent().parent().parent().remove();}',
                         'type' => 'post',
                     ],
                     [
