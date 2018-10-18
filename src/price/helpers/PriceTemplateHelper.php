@@ -9,6 +9,7 @@ class PriceTemplateHelper
             'name' => PriceModule::t('name'),
             'count' => PriceModule::t('count'),
             'price' => PriceModule::t('price'),
+            'description' => PriceModule::t('description'),
         ];
     }
 

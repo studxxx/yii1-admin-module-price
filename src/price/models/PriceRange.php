@@ -61,8 +61,10 @@ class PriceRange extends CActiveRecord
         return intval($this->id) === $id;
     }
 
-    public function change($value)
+    public function change(int $from, $to, int $value)
     {
+        $this->from = $from;
+        $this->to = $to;
         $this->value = $value;
     }
 }
